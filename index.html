@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeStart — Learn Programming the Easy Way</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1F3B;
+    --paper:#F7F4EC;
+    --paper-2:#EFEADC;
+    --coral:#FF6B4A;
+    --coral-dark:#E2512F;
+    --green:#2E9E6D;
+    --surface:#2B2F55;
+    --muted:#6B7094;
+    --line: rgba(27,31,59,0.14);
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+  a{color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit;}
+
+  :focus-visible{outline:2.5px solid var(--coral); outline-offset:2px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:40;
+    background:rgba(247,244,236,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;text-decoration:none;color:var(--ink);flex-shrink:0;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:8px;background:var(--ink);
+    color:var(--paper);display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:600;
+    transform:rotate(-3deg);
+    flex-shrink:0;
+  }
+  .nav-links{display:flex;gap:28px;align-items:center;font-weight:500;font-size:0.95rem;}
+  .nav-links a{text-decoration:none;color:var(--ink);opacity:0.75;transition:opacity .15s;white-space:nowrap;}
+  .nav-links a:hover{opacity:1;}
+  .nav-page-links{display:flex;gap:28px;}
+  .nav-auth-links{display:flex;gap:10px;align-items:center;flex-shrink:0;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 20px;border-radius:7px;border:1.5px solid var(--ink);
+    font-weight:600;font-size:0.92rem;background:transparent;color:var(--ink);
+    text-decoration:none; transition:transform .12s, background .15s, color .15s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-solid{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .btn-solid:hover{background:#2a2f55;}
+  .btn-coral{background:var(--coral);color:#fff;border-color:var(--coral);}
+  .btn-coral:hover{background:var(--coral-dark);border-color:var(--coral-dark);}
+  .btn-sm{padding:8px 14px;font-size:0.85rem;}
+  .btn-ghost{border-color:transparent;}
+  .btn-ghost:hover{background:rgba(27,31,59,0.06);}
+  .btn-block{width:100%;justify-content:center;}
+  .btn[disabled]{opacity:0.5;cursor:not-allowed;transform:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 64px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:start;}
+  .kicker{
+    font-size:0.95rem;color:var(--coral-dark);font-weight:600;margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem, 4.2vw, 3.6rem);
+    line-height:1.08;
+    font-weight:600;
+    margin:0 0 22px;
+    letter-spacing:-0.01em;
+  }
+  .hero p.lede{font-size:1.1rem;color:var(--muted);max-width:46ch;margin:0 0 30px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px;}
+  .hero-note{font-size:0.88rem;color:var(--muted);}
+
+  .syllabus{
+    background:var(--ink);
+    border-radius:16px;
+    padding:30px 28px;
+    color:var(--paper);
+  }
+  .syllabus-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;}
+  .syllabus-head h3{color:var(--paper);margin:0;font-size:1.1rem;font-weight:500;}
+  .syllabus-head span{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:rgba(247,244,236,0.5);}
+  .syllabus-list{list-style:none;margin:0;padding:0;}
+  .syllabus-list li{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:11px 0;border-bottom:1px solid rgba(247,244,236,0.12);
+    font-size:0.95rem;
+  }
+  .syllabus-list li:last-child{border-bottom:none;}
+  .syllabus-num{
+    font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--coral);
+    flex-shrink:0; width:22px; padding-top:2px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:70px 0;}
+  .section-head{max-width:620px;margin-bottom:44px;}
+  .section-head h2{font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:600;margin:0 0 14px;letter-spacing:-0.01em;}
+  .section-head p{color:var(--muted);font-size:1.03rem;margin:0;}
+
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .feature{background:var(--paper);padding:30px 26px;}
+  .feature .icon{
+    width:40px;height:40px;border-radius:9px;background:var(--paper-2);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:1.25rem;
+  }
+  .feature h3{font-size:1.08rem;font-weight:600;margin:0 0 8px;font-family:'Inter',sans-serif;}
+  .feature p{color:var(--muted);font-size:0.93rem;margin:0;}
+
+  .how{border-top:1px solid var(--line);}
+  .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  .how-step{padding:0 22px 0 0;position:relative;}
+  .how-step:not(:last-child)::after{
+    content:"";position:absolute;top:10px;right:-1px;width:1px;height:46px;background:var(--line);
+  }
+  .how-step .n{font-family:'JetBrains Mono',monospace;color:var(--coral-dark);font-size:0.85rem;margin-bottom:10px;display:block;}
+  .how-step h4{margin:0 0 8px;font-size:1rem;font-weight:600;}
+  .how-step p{margin:0;color:var(--muted);font-size:0.9rem;}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:0.86rem;}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+
+  /* ---------- MODAL / AUTH ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(27,31,59,0.55);
+    display:none;align-items:flex-start;justify-content:center;z-index:100;padding:20px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--paper);border-radius:14px;max-width:420px;width:100%;
+    padding:34px 32px;position:relative;
+    box-shadow:0 20px 60px rgba(27,31,59,0.3);
+    margin:28px auto;
+    max-height:calc(100vh - 56px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .modal-close{
+    position:absolute;top:18px;right:18px;background:none;border:none;
+    font-size:1.3rem;color:var(--muted);line-height:1;padding:4px;
+  }
+  .modal h2{font-size:1.5rem;margin:0 0 6px;font-weight:600;}
+  .modal .sub{color:var(--muted);font-size:0.92rem;margin:0 0 24px;}
+  .tabs{display:flex;gap:4px;background:var(--paper-2);padding:4px;border-radius:9px;margin-bottom:22px;}
+  .tab{flex:1;text-align:center;padding:9px;border-radius:6px;font-size:0.88rem;font-weight:600;border:none;background:transparent;color:var(--muted);}
+  .tab.active{background:var(--ink);color:var(--paper);}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:0.84rem;font-weight:600;margin-bottom:6px;}
+  .field input,.field select{
+    width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;
+    font-size:0.95rem;background:#fff;
+  }
+  .field input:focus,.field select:focus{border-color:var(--ink);}
+  .role-switch{display:flex;gap:8px;margin-bottom:18px;}
+  .role-btn{
+    flex:1;padding:12px;border-radius:8px;border:1.5px solid var(--line);background:#fff;
+    font-size:0.88rem;font-weight:600;text-align:center;color:var(--muted);
+  }
+  .role-btn.active{border-color:var(--ink);color:var(--ink);background:var(--paper-2);}
+  .form-error{
+    background:#FDEEEC;border:1px solid #F3B9AB;color:var(--coral-dark);
+    padding:10px 13px;border-radius:7px;font-size:0.85rem;margin-bottom:16px;display:none;
+  }
+  .form-error.show{display:block;}
+  .form-success{background:#E3F3EB;border:1px solid #A6D8BB;color:#236B4B;padding:10px 13px;border-radius:7px;font-size:0.85rem;margin-bottom:16px;display:none;}
+  .form-success.show{display:block;}
+  .form-hint{font-size:0.8rem;color:var(--muted);margin-top:-8px;margin-bottom:16px;}
+  .switch-mode{text-align:center;font-size:0.88rem;color:var(--muted);margin-top:6px;}
+  .switch-mode button{background:none;border:none;color:var(--coral-dark);font-weight:600;text-decoration:underline;padding:0;}
+
+  /* ---------- APP (post-login) ---------- */
+  #app{display:none;min-height:100vh;}
+  #app.open{display:flex;}
+  .sidebar{
+    width:248px;flex-shrink:0;background:var(--ink);color:var(--paper);
+    padding:26px 20px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+  }
+  .sidebar .brand{color:var(--paper);margin-bottom:34px;}
+  .side-nav{list-style:none;padding:0;margin:0;flex:1;}
+  .side-nav li{margin-bottom:4px;}
+  .side-link{
+    display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:8px;
+    font-size:0.92rem;font-weight:500;color:rgba(247,244,236,0.72);
+    background:none;border:none;width:100%;text-align:left;
+  }
+  .side-link:hover{background:rgba(247,244,236,0.08);color:var(--paper);}
+  .side-link.active{background:rgba(255,107,74,0.18);color:#fff;}
+  .side-link .ic{width:18px;text-align:center;}
+  .nav-logout-item{margin-top:14px;padding-top:14px;border-top:1px solid rgba(247,244,236,0.15);}
+  .logout-link{color:rgba(255,145,120,0.9);}
+  .logout-link:hover{background:rgba(255,107,74,0.15);color:#fff;}
+  .side-foot{border-top:1px solid rgba(247,244,236,0.15);padding-top:16px;}
+  .who{font-size:0.85rem;color:rgba(247,244,236,0.55);margin-bottom:10px;}
+  .who strong{color:var(--paper);display:block;font-size:0.95rem;}
+
+  .main{flex:1;padding:36px 42px;max-width:1040px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .page-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:14px;}
+  .page-head h1{font-size:1.8rem;margin:0 0 6px;font-weight:600;}
+  .page-head p{color:var(--muted);margin:0;font-size:0.95rem;}
+
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px;}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;}
+  .stat .num{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;color:var(--ink);}
+  .stat .lbl{font-size:0.85rem;color:var(--muted);margin-top:2px;}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px 26px;margin-bottom:18px;}
+  .card h3{margin:0 0 4px;font-size:1.05rem;font-weight:600;}
+
+  .lesson-list{display:flex;flex-direction:column;gap:10px;}
+  .lesson-row{
+    display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;padding:16px 18px;
+  }
+  .lesson-row .lnum{
+    width:36px;height:36px;border-radius:8px;background:var(--paper-2);display:flex;
+    align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;color:var(--ink);flex-shrink:0;
+  }
+  .lesson-row.done .lnum{background:var(--green);color:#fff;}
+  .lesson-row .ltext{flex:1;}
+  .lesson-row .ltitle{font-weight:600;font-size:0.95rem;}
+  .lesson-row .ldesc{color:var(--muted);font-size:0.85rem;margin-top:2px;}
+  .pill{font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--paper-2);color:var(--muted);}
+  .pill.done{background:#E3F3EB;color:var(--green);}
+
+  table{width:100%;border-collapse:collapse;}
+  th,td{text-align:left;padding:12px 14px;font-size:0.9rem;border-bottom:1px solid var(--line);}
+  th{color:var(--muted);font-weight:600;font-size:0.8rem;}
+  tr:last-child td{border-bottom:none;}
+  .badge-source{font-size:0.75rem;padding:3px 9px;border-radius:20px;font-weight:600;}
+  .badge-approved{background:#E3F3EB;color:var(--green);}
+  .badge-private{background:var(--paper-2);color:var(--muted);}
+
+  .empty{text-align:center;padding:50px 20px;color:var(--muted);}
+  .empty .big{font-size:2rem;margin-bottom:10px;}
+
+  /* ---------- TEACHER: STUDENT QUESTIONS ---------- */
+  .qcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:14px;}
+  .qcard .qmeta{font-size:0.8rem;color:var(--muted);margin-bottom:8px;}
+  .qcard .qmeta strong{color:var(--ink);}
+  .qcard .qtext{font-size:0.98rem;font-weight:500;margin-bottom:14px;line-height:1.5;}
+  .qcard .qanswer{
+    background:var(--paper-2);border-radius:9px;padding:12px 14px;font-size:0.9rem;
+    margin-top:10px;line-height:1.5;
+  }
+  .qcard .qanswer .qa-label{font-size:0.75rem;font-weight:700;color:var(--green);margin-bottom:4px;display:block;}
+  .qreply-row{display:flex;gap:10px;margin-top:4px;}
+  .qreply-row textarea{
+    flex:1;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;font-size:0.9rem;
+    font-family:inherit;resize:vertical;min-height:44px;
+  }
+  .qreply-row textarea:focus{border-color:var(--ink);}
+  .pill-pending{background:#FDEEEC;color:var(--coral-dark);}
+  .pill-answered{background:#E3F3EB;color:var(--green);}
+  .inbox-thread{display:flex;flex-direction:column;gap:10px;margin:14px 0;}
+  .inbox-message{padding:12px 14px;border-radius:8px;background:var(--paper-2);white-space:pre-wrap;overflow-wrap:anywhere;}
+  .inbox-message.student{background:#E3F3EB;align-self:flex-end;max-width:90%;}
+  .inbox-message.teacher{background:var(--paper-2);align-self:flex-start;max-width:90%;}
+  .inbox-message .qmeta{margin:0 0 4px;}
+  .assignment-form{display:grid;gap:12px;max-width:620px;}
+  .assignment-form input,.assignment-form select,.assignment-form textarea,.grade-form input,.grade-form textarea,.student-compose textarea{
+    width:100%;border:1.5px solid var(--line);border-radius:8px;padding:11px 13px;font:inherit;background:#fff;
+  }
+  .assignment-form textarea,.grade-form textarea,.student-compose textarea{resize:vertical;min-height:100px;}
+  .grade-form{display:grid;grid-template-columns:minmax(90px,130px) 1fr auto;gap:10px;align-items:start;margin-top:14px;}
+  .assignment-question{white-space:pre-wrap;margin:8px 0 14px;}
+  .score-note{font-size:0.9rem;color:var(--green);font-weight:600;}
+  @media(max-width:640px){.grade-form{grid-template-columns:1fr;}}
+
+  /* ---------- CHAT ---------- */
+  .chat-wrap{
+    display:flex;flex-direction:column;height:calc(100vh - 160px);
+    background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  }
+  .chat-head{
+    padding:16px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;
+    background:var(--paper-2);
+  }
+  .chat-avatar{
+    width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
+  }
+  .chat-head .ct-name{font-weight:600;font-size:0.95rem;}
+  .chat-head .ct-sub{font-size:0.78rem;color:var(--muted);}
+  .chat-body{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:14px;}
+  .msg{max-width:72%;padding:12px 16px;border-radius:14px;font-size:0.93rem;line-height:1.5;white-space:pre-wrap;}
+  .msg.bot{background:var(--paper-2);align-self:flex-start;border-bottom-left-radius:4px;}
+  .msg.user{background:var(--ink);color:var(--paper);align-self:flex-end;border-bottom-right-radius:4px;}
+  .msg.teacher-msg{background:#E3F3EB;border:1.5px solid var(--green);}
+  .msg code{font-family:'JetBrains Mono',monospace;background:rgba(27,31,59,0.08);padding:1px 5px;border-radius:4px;font-size:0.88em;}
+  .msg.bot code{background:rgba(27,31,59,0.08);}
+  .msg.user code{background:rgba(247,244,236,0.18);}
+  .msg pre{background:var(--ink);color:#DCE4F5;padding:12px 14px;border-radius:8px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.82rem;margin:8px 0 0;}
+  .typing{display:flex;gap:4px;padding:12px 16px;align-self:flex-start;}
+  .typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite;}
+  .typing span:nth-child(2){animation-delay:.15s;}
+  .typing span:nth-child(3){animation-delay:.3s;}
+  @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-5px);opacity:1;}}
+
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px 0;}
+  .chip{
+    font-size:0.82rem;padding:7px 13px;border-radius:20px;border:1.3px solid var(--line);
+    background:#fff;color:var(--ink);font-weight:500;
+  }
+  .chip:hover{border-color:var(--ink);}
+
+  .chat-input-row{display:flex;gap:10px;padding:16px 22px;border-top:1px solid var(--line);}
+  .chat-input-row input{
+    flex:1;border:1.5px solid var(--line);border-radius:24px;padding:12px 18px;font-size:0.93rem;
+  }
+  .chat-input-row input:focus{border-color:var(--ink);}
+  .send-btn{
+    width:44px;height:44px;border-radius:50%;background:var(--coral);border:none;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+    transition:background .15s, transform .1s;
+  }
+  .send-btn:hover{background:var(--coral-dark);transform:scale(1.04);}
+
+  .save-row{display:flex;gap:10px;align-items:center;padding:0 22px 16px;}
+  .save-note{font-size:0.78rem;color:var(--muted);}
+  .mobile-nav-toggle{display:none;}
+  .mobile-nav-backdrop{display:none;}
+
+  @media (max-width:640px){
+    .nav-page-links{display:none;}
+    .nav-inner{padding:14px 18px;}
+    .brand{font-size:1.02rem;}
+    .btn-sm{padding:8px 12px;font-size:0.82rem;}
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .features{grid-template-columns:1fr;}
+    .how-grid{grid-template-columns:1fr 1fr;row-gap:24px;}
+    .how-step::after{display:none;}
+    #app.open{flex-direction:row;}
+    .sidebar{position:fixed;left:0;top:0;bottom:0;width:min(82vw,280px);height:100vh;height:100dvh;z-index:130;flex-direction:column;align-items:stretch;padding:22px 18px;overflow-y:auto;transform:translateX(-105%);transition:transform .2s ease,width .2s ease,padding .2s ease;}
+    .sidebar.mobile-open{transform:translateX(0);}
+    .sidebar.mobile-compact{width:72px;min-width:72px;padding-left:9px;padding-right:9px;}
+    .sidebar.mobile-compact .brand{justify-content:center;font-size:0;}
+    .sidebar.mobile-compact .brand-mark{transform:none;}
+    .sidebar.mobile-compact .side-link{justify-content:center;padding-left:8px;padding-right:8px;font-size:0;}
+    .sidebar.mobile-compact .side-link .ic{width:auto;font-size:1.1rem;}
+    .sidebar.mobile-compact .nav-logout-item{padding-left:0;}
+    .main.mobile-nav-compact{margin-left:72px;width:calc(100% - 72px);}
+    .sidebar .brand{margin:0 0 28px;}
+    .side-nav{display:flex;flex:1;flex-direction:column;align-items:stretch;gap:2px;overflow-x:visible;overflow-y:auto;margin:0;}
+    .side-nav li{margin:0;flex-shrink:0;}
+    .side-link{white-space:normal;min-height:44px;}
+    .nav-logout-item{margin-top:auto;padding:14px 0 0;border-top:1px solid rgba(247,244,236,0.15);border-left:none;padding-left:0;}
+    .side-foot{display:none;}
+    .mobile-nav-toggle{display:inline-flex;align-items:center;gap:10px;position:sticky;top:8px;z-index:50;margin:0 0 18px;padding:10px 14px;border:1.5px solid var(--ink);border-radius:7px;background:var(--ink);color:var(--paper);font-weight:600;}
+    .mobile-nav-toggle .menu-icon{font-size:1.2rem;line-height:1;}
+    .mobile-nav-backdrop.active{display:block;position:fixed;inset:0;z-index:120;background:rgba(27,31,59,0.52);border:0;padding:0;}
+    .main{padding:16px 18px 24px;max-width:none;width:100%;}
+    .stat-row{grid-template-columns:1fr;}
+    .msg{max-width:88%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ MARKETING SITE ============ -->
+<div id="site">
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="brand" onclick="goHome(event)"><span class="brand-mark">&lt;/&gt;</span>CodeStart</a>
+      <div class="nav-links">
+        <div class="nav-page-links">
+          <a href="#how">How it works</a>
+          <a href="#features">Features</a>
+        </div>
+        <div class="nav-auth-links" id="navAuthLinksLoggedOut">
+          <button class="btn btn-sm" onclick="openAuth('login')">Log in</button>
+          <button class="btn btn-sm btn-coral" onclick="openAuth('signup')">Get started</button>
+        </div>
+        <div class="nav-auth-links" id="navAuthLinksLoggedIn" style="display:none;">
+          <button class="btn btn-sm" onclick="goToApp()">Go to dashboard</button>
+          <button class="btn btn-sm btn-coral" onclick="logout()">Log out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Built for junior secondary school</p>
+        <h1>Programming, explained the way a first lesson should sound.</h1>
+        <p class="lede">CodeStart is a tutoring tool for JSS students taking their first steps into programming — with a tutor you can chat with any time a concept doesn't make sense, and a teacher who can see how you're doing.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-coral" onclick="openAuth('signup')">Create your account</button>
+          <button class="btn" onclick="openAuth('login')">I already have one</button>
+        </div>
+        <p class="hero-note">Students need an access code from their school to register. Ask your teacher for yours.</p>
+      </div>
+      <div class="syllabus">
+        <div class="syllabus-head">
+          <h3>Lesson 1 — Getting Started</h3>
+          <span>16 topics</span>
+        </div>
+        <ul class="syllabus-list" id="heroSyllabus"></ul>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Everything a first-time coder needs</h2>
+        <p>No installs, no setup — just the core ideas explained clearly, with someone to ask when you're stuck.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="icon">💬</div>
+          <h3>Ask-anytime tutor</h3>
+          <p>A chat tutor trained on the exact questions JSS students ask first — from "what is a variable" to "what does print() do."</p>
+        </div>
+        <div class="feature">
+          <div class="icon">📘</div>
+          <h3>A clear starting syllabus</h3>
+          <p>Sixteen foundational topics, ordered the way a first course should be — no jumping ahead, no jargon without explanation.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🧑‍🏫</div>
+          <h3>Teacher visibility</h3>
+          <p>Teachers get a dashboard of which students are active, what they've asked, and where they're getting stuck — for approved students.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How it works</h2>
+      </div>
+      <div class="how-grid">
+        <div class="how-step">
+          <span class="n">1</span>
+          <h4>Register</h4>
+          <p>Sign up with your email and password as a student or teacher.</p>
+        </div>
+        <div class="how-step">
+          <span class="n">2</span>
+          <h4>Enter your code</h4>
+          <p>Students enter their school's access code to connect to their teacher's class.</p>
+        </div>
+        <div class="how-step">
+          <span class="n">3</span>
+          <h4>Chat & learn</h4>
+          <p>Ask the tutor questions, work through the 16 starter topics at your own pace.</p>
+        </div>
+        <div class="how-step">
+          <span class="n">4</span>
+          <h4>Track progress</h4>
+          <p>Teachers see approved students' activity on a simple dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>CodeStart — an intelligent tutorial system for teaching basic programming concepts.</span>
+      <span>Built for junior secondary schools.</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ AUTH MODAL ============ -->
+<div class="overlay" id="authOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()" aria-label="Close">&times;</button>
+    <div class="tabs">
+      <button class="tab" id="tabLogin" onclick="setAuthMode('login')">Log in</button>
+      <button class="tab" id="tabSignup" onclick="setAuthMode('signup')">Sign up</button>
+    </div>
+
+    <div id="authLoginView">
+      <h2>Welcome back</h2>
+      <p class="sub">Log in with your email and password.</p>
+      <div class="form-error" id="loginError"></div>
+      <div class="role-switch" style="margin-bottom:16px;">
+        <button class="role-btn active" id="loginRoleStudentBtn" onclick="setLoginRole('student')">I'm a student</button>
+        <button class="role-btn" id="loginRoleTeacherBtn" onclick="setLoginRole('teacher')">I'm a teacher</button>
+      </div>
+      <div class="field">
+        <label for="loginEmail">Gmail address</label>
+        <input type="email" id="loginEmail" autocomplete="email" placeholder="name@gmail.com">
+      </div>
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" autocomplete="current-password">
+      </div>
+      <button class="btn btn-coral btn-block" onclick="handleLogin()">Log in</button>
+      <p class="switch-mode">No account yet? <button onclick="setAuthMode('signup')">Sign up</button></p>
+    </div>
+
+    <div id="authSignupView" style="display:none;">
+      <h2>Create your account</h2>
+      <p class="sub">Join as a student or a teacher.</p>
+      <div class="form-error" id="signupError"></div>
+      <div class="form-success" id="signupSuccess" role="status"></div>
+
+      <div class="role-switch">
+        <button class="role-btn active" id="roleStudentBtn" onclick="setSignupRole('student')">I'm a student</button>
+        <button class="role-btn" id="roleTeacherBtn" onclick="setSignupRole('teacher')">I'm a teacher</button>
+      </div>
+
+      <div id="teacherOnlyFields" style="display:none;">
+        <div class="field">
+          <label for="teacherState">State</label>
+          <select id="teacherState" onchange="onTeacherStateChange()">
+            <option value="" selected disabled>Select your state</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="teacherLga">Local government area</label>
+          <select id="teacherLga" onchange="onTeacherLgaChange()" disabled>
+            <option value="" selected disabled>Select your state first</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="teacherSchool">School name</label>
+          <select id="teacherSchool" disabled onchange="onTeacherSchoolSelectChange()">
+            <option value="" selected disabled>Select your local government first</option>
+          </select>
+        </div>
+        <div class="field" id="teacherCustomSchoolField" style="display:none;">
+          <label for="teacherSchoolCustom">Type your school's name</label>
+          <input type="text" id="teacherSchoolCustom" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="signupName">Full name</label>
+        <input type="text" id="signupName" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" autocomplete="new-password">
+      </div>
+
+      <div id="studentOnlyFields">
+        <div class="field">
+          <label for="signupAge">Age</label>
+          <input type="number" id="signupAge" min="8" max="25" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="signupLevel">Class</label>
+          <select id="signupLevel">
+            <option value="" selected disabled>Select your class</option>
+            <option value="JSS1">JSS 1</option>
+            <option value="JSS2">JSS 2</option>
+            <option value="JSS3">JSS 3</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="signupState">State</label>
+          <select id="signupState" onchange="onStateChange()">
+            <option value="" selected disabled>Select your state</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="signupLga">Local government area</label>
+          <select id="signupLga" onchange="onLgaChange()" disabled>
+            <option value="" selected disabled>Select your state first</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="signupSchool">School name</label>
+          <select id="signupSchool" disabled onchange="onSchoolSelectChange()">
+            <option value="" selected disabled>Select your local government first</option>
+          </select>
+        </div>
+        <div class="field" id="customSchoolField" style="display:none;">
+          <label for="signupSchoolCustom">Type your school's name</label>
+          <input type="text" id="signupSchoolCustom" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="signupCode" id="codeLabel">School access code</label>
+        <input type="text" id="signupCode" autocomplete="off">
+      </div>
+      <p class="form-hint" id="codeHint">Required for students. Ask your teacher for this code — it's what links your work to their dashboard.</p>
+
+      <button class="btn btn-coral btn-block" onclick="handleSignup()">Create account</button>
+      <p class="switch-mode">Already registered? <button onclick="setAuthMode('login')">Log in</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WELCOME / ENCOURAGEMENT OVERLAY (students only) ============ -->
+<div class="overlay" id="welcomeOverlay">
+  <div class="modal" style="max-width:460px;text-align:center;padding:40px 34px;">
+    <div style="font-size:2.6rem;margin-bottom:6px;" id="welcomeEmoji">👋</div>
+    <h2 id="welcomeTitle">Welcome!</h2>
+    <p class="sub" id="welcomeMessage" style="font-size:0.98rem;line-height:1.6;"></p>
+    <button class="btn btn-coral btn-block" onclick="closeWelcome()">Let's start learning</button>
+  </div>
+</div>
+
+<!-- ============ GRADED ASSIGNMENT NOTICE ============ -->
+<div class="overlay" id="gradeNoticeOverlay">
+  <div class="modal" style="max-width:500px;">
+    <div style="font-size:2rem;margin-bottom:8px;">🌟</div>
+    <h2>Your work has been marked</h2>
+    <p class="sub">Your teacher has checked your homework. Keep learning one step at a time; every attempt helps you grow.</p>
+    <div id="gradeNoticeList"></div>
+    <button class="btn btn-coral btn-block" onclick="closeGradeNotice()">Open my inbox</button>
+  </div>
+</div>
+
+<!-- ============ LOG OUT CONFIRM OVERLAY ============ -->
+<div class="overlay" id="logoutOverlay">
+  <div class="modal" style="max-width:380px;text-align:center;padding:36px 32px;">
+    <div style="font-size:2.2rem;margin-bottom:10px;">🚪</div>
+    <h2 style="margin-bottom:10px;">Log out?</h2>
+    <p class="sub" style="margin-bottom:26px;">You'll need to log back in with your email and password to access your dashboard again.</p>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-block" onclick="closeLogoutConfirm()">Cancel</button>
+      <button class="btn btn-coral btn-block" onclick="confirmLogout()">Log out</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP (logged in) ============ -->
+<div id="app">
+  <aside class="sidebar" id="appSidebar">
+    <a href="#" class="brand"><span class="brand-mark">&lt;/&gt;</span>CodeStart</a>
+    <ul class="side-nav" id="sideNav"></ul>
+    <div class="side-foot">
+      <div class="who"><strong id="whoName">—</strong><span id="whoRole">—</span></div>
+      <button class="btn btn-sm btn-block" onclick="logout()">Log out</button>
+    </div>
+  </aside>
+  <button class="mobile-nav-backdrop" id="mobileNavBackdrop" onclick="toggleMobileNav(false)" aria-label="Close navigation"></button>
+
+  <main class="main">
+    <button class="mobile-nav-toggle" id="mobileNavToggle" onclick="toggleMobileNav()" aria-expanded="false" aria-controls="appSidebar">
+      <span class="menu-icon" aria-hidden="true">☰</span><span>Menu</span>
+    </button>
+
+    <!-- STUDENT: Dashboard -->
+    <section class="page" id="page-s-dashboard">
+      <div class="page-head">
+        <div>
+          <h1 id="studentGreeting">Welcome back</h1>
+          <p>Here's where you left off.</p>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num" id="statTopicsDone">0/16</div><div class="lbl">Topics covered</div></div>
+        <div class="stat"><div class="num" id="statQuestions">0</div><div class="lbl">Questions asked</div></div>
+        <div class="stat"><div class="num" id="statStatus">—</div><div class="lbl">Teacher visibility</div></div>
+      </div>
+      <div class="card">
+        <h3>Jump back into the chat</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:0 0 16px;">Ask the tutor anything from the syllabus, or pick up where you left off.</p>
+        <button class="btn btn-coral" onclick="goTo('s-chat')">Open tutor chat →</button>
+      </div>
+    </section>
+
+    <!-- STUDENT: Syllabus -->
+    <section class="page" id="page-s-syllabus">
+      <div class="page-head">
+        <div><h1 id="syllabusTitle">Your syllabus</h1><p id="syllabusSub">Tap "Learn this" to have the tutor walk you through a topic.</p></div>
+      </div>
+      <div class="lesson-list" id="studentLessonList"></div>
+    </section>
+
+    <!-- STUDENT: Chat -->
+    <section class="page" id="page-s-chat">
+      <div class="page-head">
+        <div><h1>Tutor chat</h1><p>Ask about any of the 16 starter topics.</p></div>
+      </div>
+      <div class="chat-wrap">
+        <div class="chat-head">
+          <div class="chat-avatar">🤖</div>
+          <div>
+            <div class="ct-name">Miss Ada — your coding tutor</div>
+            <div class="ct-sub">Answers basic programming questions for JSS students</div>
+          </div>
+        </div>
+        <div class="chip-row" id="chatChips"></div>
+        <div style="padding:10px 22px 0; display:flex; justify-content:flex-end;">
+          <button id="restoreChatBtn" class="btn btn-sm btn-ghost" onclick="restorePreviousChat()" style="display:none;">Restore previous chat</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-input-row">
+          <input type="text" id="chatInput" placeholder="Type your question… e.g. what is a variable?" onkeydown="if(event.key==='Enter')sendChat()">
+          <button class="send-btn" onclick="sendChat()" aria-label="Send">➤</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT: My Account -->
+    <section class="page" id="page-s-account">
+      <div class="page-head"><div><h1>Your account</h1><p>Account details and teacher visibility status.</p></div></div>
+      <div class="card">
+        <h3 id="accName">—</h3>
+        <p style="color:var(--muted);font-size:0.9rem;" id="accEmail">—</p>
+      </div>
+      <div class="card">
+        <h3>School</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:0;" id="accSchool">—</p>
+      </div>
+      <div class="card">
+        <h3>Teacher visibility</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:0 0 10px;" id="accCodeStatus">—</p>
+        <span class="badge-source" id="accBadge"></span>
+      </div>
+    </section>
+
+    <!-- STUDENT: Inbox -->
+    <section class="page" id="page-s-inbox">
+      <div class="page-head"><div><h1>Inbox</h1><p>Messages from your teacher and homework for your class.</p></div></div>
+      <div class="card">
+        <h3>Messages</h3>
+        <div id="studentInboxMessages"></div>
+        <div class="student-compose">
+          <label for="studentMessageInput" style="display:block;font-size:0.84rem;font-weight:600;margin:12px 0 6px;">Send your teacher a message</label>
+          <textarea id="studentMessageInput" placeholder="Ask a question or reply to your teacher"></textarea>
+          <button class="btn btn-coral btn-sm" style="margin-top:10px;" onclick="sendStudentMessage()">Send message</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Assignments</h3>
+        <div id="studentAssignments"></div>
+      </div>
+    </section>
+
+    <!-- TEACHER: Dashboard -->
+    <section class="page" id="page-t-dashboard">
+      <div class="page-head">
+        <div><h1 id="teacherGreeting">Welcome back</h1><p>An overview of your approved students.</p></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num" id="statStudentCount">0</div><div class="lbl">Approved students</div></div>
+        <div class="stat"><div class="num" id="statTotalQ">0</div><div class="lbl">Total questions asked</div></div>
+        <div class="stat"><div class="num" id="statAvgProgress">0%</div><div class="lbl">Average syllabus progress</div></div>
+      </div>
+      <div class="card">
+        <h3>Your teacher access code</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:0 0 10px;">This code is based on your selected state. It must match the state you choose when you sign up.</p>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.2rem;font-weight:600;background:var(--paper-2);display:inline-block;padding:10px 18px;border-radius:8px;" id="teacherCodeDisplay">LAFIA-HUB</div>
+      </div>
+
+      <div class="card">
+        <h3>Generate student access codes</h3>
+        <p style="color:var(--muted);font-size:0.9rem;margin:0 0 14px;">Add one or more schools in your registered local government. Each school gets its own code, and students using it with matching details will be linked to your dashboard.</p>
+        <div class="field" style="max-width:420px;">
+          <label id="studentCodeSchoolLabel" for="studentCodeSchool">School</label>
+          <select id="studentCodeSchool" onchange="onStudentCodeSchoolChange()" disabled>
+            <option value="" selected disabled>Select your school</option>
+          </select>
+        </div>
+        <div class="field" id="studentCodeCustomSchoolField" style="display:none;max-width:420px;">
+          <label for="studentCodeSchoolCustom">Type the school's name</label>
+          <input type="text" id="studentCodeSchoolCustom" autocomplete="off">
+        </div>
+        <button class="btn btn-sm" style="margin-bottom:14px;" onclick="addStudentCodeSchoolSelection()">Add school</button>
+        <div id="teacherSelectedCodeSchools" style="margin-bottom:14px;"></div>
+        <button class="btn btn-coral" onclick="generateStudentAccessCodeForTeacher()">Generate codes</button>
+        <div id="teacherGeneratedCodes" style="margin-top:18px;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Recent login sessions</h3>
+        <div id="recentLoginSessions"></div>
+      </div>
+    </section>
+
+    <!-- TEACHER: Students -->
+    <section class="page" id="page-t-students">
+      <div class="page-head"><div><h1>Students</h1><p>Only students who signed up with your access code appear here.</p></div></div>
+      <div class="card" style="padding:0;overflow:hidden;" id="studentTableCard">
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Level</th><th>School</th><th>Age</th><th>Progress</th><th>Questions asked</th><th>Last active</th></tr></thead>
+          <tbody id="studentTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TEACHER: Assignments -->
+    <section class="page" id="page-t-assignments">
+      <div class="page-head"><div><h1>Assignments</h1><p>Set homework, review student answers, and return a score.</p></div></div>
+      <div class="card">
+        <h3>Send an assignment</h3>
+        <div class="assignment-form" style="margin-top:14px;">
+          <div class="field" style="margin:0;">
+            <label for="assignmentStudent">Student</label>
+            <select id="assignmentStudent"></select>
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="assignmentTitle">Assignment title</label>
+            <input type="text" id="assignmentTitle" maxlength="100" placeholder="e.g. Variables practice">
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="assignmentQuestion">Questions / instructions</label>
+            <textarea id="assignmentQuestion" maxlength="3000" placeholder="Write the homework questions here"></textarea>
+          </div>
+          <div class="field" style="margin:0;max-width:240px;">
+            <label for="assignmentDueDate">Due date (optional)</label>
+            <input type="date" id="assignmentDueDate">
+          </div>
+          <button class="btn btn-coral" style="justify-self:start;" onclick="sendAssignment()">Send assignment</button>
+        </div>
+      </div>
+      <div id="teacherAssignments"></div>
+    </section>
+
+    <!-- TEACHER: Student Questions -->
+    <section class="page" id="page-t-questions">
+      <div class="page-head">
+        <div><h1>Student questions</h1><p>Questions the tutor couldn't answer — your reply goes straight back into the student's chat.</p></div>
+      </div>
+      <div id="questionsList"></div>
+    </section>
+
+    <!-- TEACHER: Account -->
+    <section class="page" id="page-t-account">
+      <div class="page-head"><div><h1>Your account</h1><p>Teacher account details.</p></div></div>
+      <div class="card">
+        <h3 id="tAccName">—</h3>
+        <p style="color:var(--muted);font-size:0.9rem;" id="tAccEmail">—</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="module" src="/src/supabase.js"></script>
+<script>
+/* ======================================================================
+   DATA: Syllabus + Chatbot knowledge base (built from the user's list)
+   ====================================================================== */
+const SYLLABUS_BY_LEVEL = {
+  JSS1: [
+    {q:"What is programming?", a:"Programming is the process of giving a computer step-by-step instructions to follow, so it can perform a task. Just like a recipe tells a cook what to do in order, a program tells a computer what to do in order.\n\nExample: telling a computer \"show the words 'Hello, world!' on the screen\" is a tiny program.", tag:"Foundations"},
+    {q:"What is a computer program?", a:"A computer program is a set of instructions, written in a language the computer understands, that tells it exactly what to do and in what order to do it.\n\nExample: a calculator app is a program made of instructions for adding, subtracting, and showing results.", tag:"Foundations"},
+    {q:"What is a variable?", a:"A variable is a named container that stores a piece of information so you can use or change it later.\n\nExample:\n<pre>age = 13\nname = \"Amina\"</pre>\nHere, <code>age</code> and <code>name</code> are variables.", tag:"Foundations"},
+    {q:"What is a programming language?", a:"A programming language is a set of rules and words that let humans write instructions a computer can understand and carry out — examples include Python, Scratch, and JavaScript.", tag:"Foundations"},
+    {q:"What is a number in programming?", a:"A number in programming is a data type used to store numeric values, such as <code>7</code> or <code>3.5</code>, so the computer can do maths with them.", tag:"Foundations"},
+    {q:"What is a string?", a:"A string is a data type used to store text — a sequence of characters surrounded by quotes.\n\nExample: <code>\"Hello, world!\"</code>", tag:"Foundations"},
+    {q:"What is a comment in programming?", a:"A comment is a note written in your code that the computer ignores — it's there to help humans understand what the code does.\n\nExample: <code># this adds two numbers</code>", tag:"Foundations"},
+    {q:"What is an operator?", a:"An operator is a symbol that performs an action on values, like <code>+</code> (add), <code>-</code> (subtract), <code>*</code> (multiply), and <code>/</code> (divide).", tag:"Foundations"},
+    {q:"What is an if statement?", a:"An if statement lets your program make a decision — it runs a block of code only if a condition is true.\n\nExample:\n<pre>if age >= 13:\n    print(\"You're a teenager\")</pre>", tag:"Basics"},
+    {q:"What is a loop?", a:"A loop is a way to repeat a set of instructions multiple times, instead of writing the same code over and over.", tag:"Basics"},
+    {q:"What is a for loop used for?", a:"A for loop is used to repeat an action a specific number of times, or once for every item in a list.\n\nExample:\n<pre>for i in range(5):\n    print(i)</pre>", tag:"Basics"},
+    {q:"What is a function?", a:"A function is a named, reusable block of code that performs a specific task. You can run it whenever you need that task done, just by calling its name.\n\nExample:\n<pre>def greet():\n    print(\"Hello!\")</pre>", tag:"Basics"},
+    {q:"What is an array?", a:"An array (sometimes called a list) is a single variable used to store multiple values together, in order.\n\nExample: <code>fruits = [\"apple\", \"banana\", \"mango\"]</code>", tag:"Basics"},
+    {q:"What does print() do?", a:"<code>print()</code> displays (outputs) information on the screen, so you can see what your program is doing.\n\nExample: <code>print(\"Hello, world!\")</code> shows <code>Hello, world!</code>", tag:"Basics"},
+    {q:"What is the difference between a number and a string?", a:"A number is used for maths (like <code>7</code>), while a string is text wrapped in quotes (like <code>\"7\"</code>). You can add two numbers together, but adding two strings just joins the text.", tag:"Basics"},
+    {q:"What does = mean in programming?", a:"In programming, <code>=</code> means \"assign\" — it stores a value in a variable. It's different from <code>==</code>, which checks if two things are equal.\n\nExample: <code>score = 10</code> stores 10 in the variable <code>score</code>.", tag:"Basics"},
+  ],
+  JSS2: [
+    {q:"What is an else statement?", a:"An else statement runs a block of code when the if condition is false — it's the \"otherwise\" part of a decision.\n\nExample:\n<pre>if age >= 13:\n    print(\"Teenager\")\nelse:\n    print(\"Not a teenager yet\")</pre>", tag:"Decisions"},
+    {q:"What is elif (else if)?", a:"elif lets you check several conditions in order, one after another, instead of just two.\n\nExample:\n<pre>if score >= 70:\n    print(\"A\")\nelif score >= 50:\n    print(\"B\")\nelse:\n    print(\"C\")</pre>", tag:"Decisions"},
+    {q:"What is a while loop?", a:"A while loop repeats instructions for as long as a condition stays true — unlike a for loop, it doesn't need a fixed number of repeats.\n\nExample:\n<pre>count = 0\nwhile count < 5:\n    print(count)\n    count = count + 1</pre>", tag:"Loops"},
+    {q:"What is an infinite loop?", a:"An infinite loop is a loop whose condition never becomes false, so it keeps repeating forever — usually a mistake you want to avoid.\n\nExample of a bug:\n<pre>while True:\n    print(\"This never stops!\")</pre>", tag:"Loops"},
+    {q:"How do you find the length of a string or array?", a:"Most languages have a built-in way to count the items in a string or array.\n\nExample (Python):\n<pre>name = \"Amina\"\nprint(len(name))  # 5</pre>", tag:"Data"},
+    {q:"What is indexing in an array?", a:"Indexing means referring to an item in an array by its position number, starting from 0.\n\nExample:\n<pre>fruits = [\"apple\", \"banana\", \"mango\"]\nprint(fruits[0])  # apple\nprint(fruits[1])  # banana</pre>", tag:"Data"},
+    {q:"What are logical operators (and, or, not)?", a:"Logical operators combine or flip true/false conditions.\n\nExample:\n<pre>if age >= 13 and age <= 19:\n    print(\"Teenager\")</pre>\n<code>and</code> means both conditions must be true, <code>or</code> means at least one, <code>not</code> flips true to false.", tag:"Decisions"},
+    {q:"What is user input?", a:"User input lets a program ask the person using it to type something, and the program can then use that information.\n\nExample (Python):\n<pre>name = input(\"What is your name? \")\nprint(\"Hello, \" + name)</pre>", tag:"Basics"},
+    {q:"What is concatenation?", a:"Concatenation means joining two or more strings together into one.\n\nExample: <code>\"Hello, \" + \"world!\"</code> becomes <code>\"Hello, world!\"</code>", tag:"Data"},
+    {q:"What is a Boolean?", a:"A Boolean is a data type that can only be <code>True</code> or <code>False</code> — it's used to represent yes/no, on/off kinds of answers.\n\nExample: <code>is_raining = True</code>", tag:"Data"},
+    {q:"What does append() do to a list?", a:"<code>append()</code> adds a new item to the end of a list (array).\n\nExample:\n<pre>fruits = [\"apple\", \"banana\"]\nfruits.append(\"mango\")\n# fruits is now [\"apple\", \"banana\", \"mango\"]</pre>", tag:"Data"},
+    {q:"What is a syntax error?", a:"A syntax error happens when code is written in a way the computer's language rules don't allow — like a typo in a sentence. The program won't run until it's fixed.\n\nExample: forgetting a colon — <code>if age >= 13</code> (missing <code>:</code>) causes a syntax error in Python.", tag:"Debugging"},
+    {q:"What is debugging?", a:"Debugging is the process of finding and fixing mistakes (bugs) in a program so it works correctly.", tag:"Debugging"},
+    {q:"What are parameters in a function?", a:"Parameters are extra pieces of information you give a function so it can use them when it runs.\n\nExample:\n<pre>def greet(name):\n    print(\"Hello, \" + name)\n\ngreet(\"Amina\")  # Hello, Amina</pre>", tag:"Functions"},
+    {q:"What does a function return?", a:"A function can send a value back to wherever it was called from, using <code>return</code>.\n\nExample:\n<pre>def add(a, b):\n    return a + b\n\nresult = add(2, 3)  # result is 5</pre>", tag:"Functions"},
+    {q:"What is nesting (like an if inside a loop)?", a:"Nesting means putting one block of code inside another — like an if statement inside a loop.\n\nExample:\n<pre>for i in range(1, 6):\n    if i % 2 == 0:\n        print(i, \"is even\")</pre>", tag:"Loops"},
+  ],
+  JSS3: [
+    {q:"What is an algorithm?", a:"An algorithm is a clear, step-by-step plan for solving a problem — a program is what you get when you write an algorithm in a programming language.\n\nExample: the steps for making tea (boil water, add tea bag, pour, add sugar) are an algorithm.", tag:"Foundations"},
+    {q:"What is pseudocode?", a:"Pseudocode is a way of planning a program using plain, simple language instead of real code — it helps you think through the logic first.\n\nExample:\n<pre>START\nASK for age\nIF age >= 13 THEN\n    PRINT \"Teenager\"\nEND</pre>", tag:"Foundations"},
+    {q:"What is a flowchart?", a:"A flowchart is a diagram that shows the steps of an algorithm using shapes and arrows — ovals for start/end, diamonds for decisions, rectangles for actions.", tag:"Foundations"},
+    {q:"What is recursion?", a:"Recursion is when a function calls itself to solve a smaller version of the same problem, until it reaches a simple case it can answer directly.\n\nExample:\n<pre>def countdown(n):\n    if n == 0:\n        print(\"Done!\")\n    else:\n        print(n)\n        countdown(n - 1)</pre>", tag:"Functions"},
+    {q:"What is a dictionary (key-value pairs)?", a:"A dictionary stores information in pairs — a key and its value — so you can look up a value by its key instead of a position number.\n\nExample:\n<pre>student = {\"name\": \"Amina\", \"age\": 13}\nprint(student[\"name\"])  # Amina</pre>", tag:"Data"},
+    {q:"What is a 2D array (table of data)?", a:"A 2D array is a list of lists — useful for representing a grid or table, like rows and columns.\n\nExample:\n<pre>grid = [[1, 2], [3, 4]]\nprint(grid[0][1])  # 2</pre>", tag:"Data"},
+    {q:"What is an exception or runtime error?", a:"A runtime error (exception) happens while a program is running — for example, trying to divide by zero. Unlike a syntax error, the code is written correctly but something goes wrong when it executes.", tag:"Debugging"},
+    {q:"What is try/except (error handling)?", a:"try/except lets a program attempt something risky and handle the error gracefully instead of crashing.\n\nExample:\n<pre>try:\n    result = 10 / 0\nexcept:\n    print(\"You can't divide by zero!\")</pre>", tag:"Debugging"},
+    {q:"What is an API?", a:"An API (Application Programming Interface) is a way for one program to ask another program for information or services — like an app asking a weather service for today's forecast.", tag:"Concepts"},
+    {q:"What is object-oriented programming (a class and an object)?", a:"A class is a blueprint for creating objects that bundle together data and behavior. An object is one specific thing made from that blueprint.\n\nExample:\n<pre>class Student:\n    def __init__(self, name):\n        self.name = name\n\namina = Student(\"Amina\")\nprint(amina.name)  # Amina</pre>", tag:"Concepts"},
+    {q:"What is a method?", a:"A method is a function that belongs to an object and can use or change that object's data.\n\nExample: <code>fruits.append(\"mango\")</code> — <code>append</code> is a method belonging to the list <code>fruits</code>.", tag:"Concepts"},
+    {q:"What is modular programming (breaking a program into parts)?", a:"Modular programming means breaking a big program into smaller, separate pieces (functions, files, or modules) that each handle one job — making the program easier to build, read, and fix.", tag:"Concepts"},
+    {q:"What is the difference between a compiler and an interpreter?", a:"A compiler translates an entire program into machine code before it runs. An interpreter translates and runs the program line by line as it goes. Python uses an interpreter; languages like C use a compiler.", tag:"Concepts"},
+    {q:"How do you plan and build a simple program from scratch?", a:"A good process: 1) Understand the problem, 2) Plan the steps (pseudocode or flowchart), 3) Write the code one small piece at a time, 4) Test it with different inputs, 5) Fix any bugs you find, 6) Clean it up with comments.\n\nExample project: a program that asks for two numbers and tells you which is bigger — plan it, write it, test it with several number pairs.", tag:"Projects"},
+    {q:"What is version control (like saving different versions of your code)?", a:"Version control is a way of keeping track of changes to a program over time, so you can see what changed and go back to an earlier version if something breaks. Tools like Git are commonly used for this.", tag:"Concepts"},
+    {q:"How do you test if your program works correctly?", a:"Testing means deliberately running your program with different inputs — including tricky or unexpected ones — to check it behaves correctly every time, not just once.\n\nExample: for a program that checks if a number is even, test it with an even number, an odd number, zero, and a negative number.", tag:"Debugging"},
+  ],
+};
+function normalizeStudentLevel(level){
+  const normalized = String(level || 'JSS1').replace(/\s+/g, '').toUpperCase();
+  return Object.prototype.hasOwnProperty.call(SYLLABUS_BY_LEVEL, normalized) ? normalized : 'JSS1';
+}
+
+function currentSyllabus(){
+  const level = normalizeStudentLevel(currentUser && currentUser.level);
+  return SYLLABUS_BY_LEVEL[level];
+}
+
+const CODES = { student: "LAFIA-HUB", teacher: "LAFIA-TEACH" };
+
+/* Nigerian states + LGAs (36 states + FCT) */
+const NIGERIA = {
+  "Abia": ["Aba North","Aba South","Arochukwu","Bende","Ikwuano","Isiala Ngwa North","Isiala Ngwa South","Isuikwuato","Umu Nneochi","Obi Ngwa","Ohafia","Ohaozara","Osisioma","Ugwunagbo","Ukwa East","Ukwa West","Umuahia North","Umuahia South"],
+  "Adamawa": ["Demsa","Fufore","Ganye","Girei","Gombi","Guyuk","Hong","Jada","Lamurde","Madagali","Maiha","Mayo-Belwa","Michika","Mubi North","Mubi South","Numan","Shelleng","Song","Toungo","Yola North","Yola South"],
+  "Akwa Ibom": ["Abak","Eastern Obolo","Eket","Esit Eket","Essien Udim","Etim Ekpo","Etinan","Ibeno","Ibesikpo Asutan","Ibiono-Ibom","Ika","Ikono","Ikot Abasi","Ikot Ekpene","Ini","Itu","Mbo","Mkpat-Enin","Nsit-Atai","Nsit-Ibom","Nsit-Ubium","Obot Akara","Okobo","Onna","Oron","Oruk Anam","Udung-Uko","Ukanafun","Urue-Offong/Oruko","Uruan","Uyo"],
+  "Anambra": ["Aguata","Anambra East","Anambra West","Anaocha","Awka North","Awka South","Ayamelum","Dunukofia","Ekwusigo","Idemili North","Idemili South","Ihiala","Njikoka","Nnewi North","Nnewi South","Ogbaru","Onitsha North","Onitsha South","Orumba North","Orumba South"],
+  "Bauchi": ["Alkaleri","Bauchi","Bogoro","Damban","Darazo","Dass","Gamawa","Ganjuwa","Giade","Itas/Gadau","Jama'are","Katagum","Kirfi","Misau","Ningi","Shira","Tafawa Balewa","Toro","Warji","Zaki"],
+  "Bayelsa": ["Brass","Ekeremor","Kolokuma/Opokuma","Nembe","Ogbia","Sagbama","Southern Ijaw","Yenagoa"],
+  "Benue": ["Ado","Agatu","Apa","Buruku","Gboko","Guma","Gwer East","Gwer West","Katsina-Ala","Konshisha","Kwande","Logo","Makurdi","Obi","Ogbadibo","Ohimini","Oju","Okpokwu","Otukpo","Tarka","Ukum","Ushongo","Vandeikya"],
+  "Borno": ["Abadam","Askira/Uba","Bama","Bayo","Biu","Chibok","Damboa","Dikwa","Gubio","Guzamala","Gwoza","Hawul","Jere","Kaga","Kala/Balge","Konduga","Kukawa","Kwaya Kusar","Mafa","Magumeri","Maiduguri","Marte","Mobbar","Monguno","Ngala","Nganzai","Shani"],
+  "Cross River": ["Abi","Akamkpa","Akpabuyo","Bakassi","Bekwarra","Biase","Boki","Calabar Municipal","Calabar South","Etung","Ikom","Obanliku","Obubra","Obudu","Odukpani","Ogoja","Yakurr","Yala"],
+  "Delta": ["Aniocha North","Aniocha South","Bomadi","Burutu","Ethiope East","Ethiope West","Ika North East","Ika South","Isoko North","Isoko South","Ndokwa East","Ndokwa West","Okpe","Oshimili North","Oshimili South","Patani","Sapele","Udu","Ughelli North","Ughelli South","Ukwuani","Uvwie","Warri North","Warri South","Warri South West"],
+  "Ebonyi": ["Abakaliki","Afikpo North","Afikpo South","Ebonyi","Ezza North","Ezza South","Ikwo","Ishielu","Ivo","Izzi","Ohaukwu","Onicha"],
+  "Edo": ["Akoko-Edo","Egor","Esan Central","Esan North East","Esan South East","Esan West","Etsako Central","Etsako East","Etsako West","Igueben","Ikpoba Okha","Oredo","Orhionmwon","Ovia North East","Ovia South West","Owan East","Owan West","Uhunmwonde"],
+  "Ekiti": ["Ado Ekiti","Efon","Ekiti East","Ekiti South West","Ekiti West","Emure","Gbonyin","Ido Osi","Ijero","Ikere","Ikole","Ilejemeje","Irepodun/Ifelodun","Ise/Orun","Moba","Oye"],
+  "Enugu": ["Aninri","Awgu","Enugu East","Enugu North","Enugu South","Ezeagu","Igbo Etiti","Igbo Eze North","Igbo Eze South","Isi Uzo","Nkanu East","Nkanu West","Nsukka","Oji River","Udenu","Udi","Uzo Uwani"],
+  "Federal Capital Territory": ["Abaji","Abuja Municipal","Bwari","Gwagwalada","Kuje","Kwali"],
+  "Gombe": ["Akko","Balanga","Billiri","Dukku","Funakaye","Gombe","Kaltungo","Kwami","Nafada","Shongom","Yamaltu/Deba"],
+  "Imo": ["Aboh Mbaise","Ahiazu Mbaise","Ehime Mbano","Ezinihitte","Ideato North","Ideato South","Ihitte/Uboma","Ikeduru","Isiala Mbano","Isu","Mbaitoli","Ngor Okpala","Njaba","Nkwerre","Nwangele","Obowo","Oguta","Ohaji/Egbema","Okigwe","Onuimo","Orlu","Orsu","Oru East","Oru West","Owerri Municipal","Owerri North","Owerri West"],
+  "Jigawa": ["Auyo","Babura","Biriniwa","Birnin Kudu","Buji","Dutse","Gagarawa","Garki","Gumel","Guri","Gwaram","Gwiwa","Hadejia","Jahun","Kafin Hausa","Kaugama","Kazaure","Kiri Kasama","Maigatari","Malam Madori","Miga","Ringim","Roni","Sule Tankarkar","Taura","Yankwashi"],
+  "Kaduna": ["Birnin Gwari","Chikun","Giwa","Igabi","Ikara","Jaba","Jema'a","Kachia","Kaduna North","Kaduna South","Kagarko","Kajuru","Kaura","Kauru","Kubau","Kudan","Lere","Makarfi","Sabon Gari","Sanga","Soba","Zangon Kataf","Zaria"],
+  "Kano": ["Ajingi","Albasu","Bagwai","Bebeji","Bichi","Bunkure","Dala","Dambatta","Dawakin Kudu","Dawakin Tofa","Doguwa","Fagge","Gabasawa","Garko","Garun Mallam","Gaya","Gezawa","Gwale","Gwarzo","Kabo","Kano Municipal","Karaye","Kibiya","Kiru","Kumbotso","Kunchi","Kura","Madobi","Makoda","Minjibir","Nasarawa","Rano","Rimin Gado","Rogo","Shanono","Sumaila","Takai","Tarauni","Tofa","Tsanyawa","Tudun Wada","Ungogo","Warawa","Wudil"],
+  "Katsina": ["Bakori","Batagarawa","Batsari","Baure","Bindawa","Charanchi","Dan Musa","Dandume","Danja","Daura","Dutsi","Dutsin-Ma","Faskari","Funtua","Ingawa","Jibia","Kafur","Kaita","Kankara","Kankia","Katsina","Kurfi","Kusada","Mai'Adua","Malumfashi","Mani","Mashi","Matazu","Musawa","Rimi","Sabuwa","Safana","Sandamu","Zango"],
+  "Kebbi": ["Aleiro","Arewa Dandi","Argungu","Augie","Bagudo","Birnin Kebbi","Bunza","Dandi","Fakai","Gwandu","Jega","Kalgo","Koko/Besse","Maiyama","Ngaski","Sakaba","Shanga","Suru","Wasagu/Danko","Yauri","Zuru"],
+  "Kogi": ["Adavi","Ajaokuta","Ankpa","Bassa","Dekina","Ibaji","Idah","Igalamela Odolu","Ijumu","Kabba/Bunu","Kogi","Lokoja","Mopa Muro","Ofu","Ogori/Magongo","Okehi","Okene","Olamaboro","Omala","Yagba East","Yagba West"],
+  "Kwara": ["Asa","Baruten","Edu","Ekiti","Ifelodun","Ilorin East","Ilorin South","Ilorin West","Irepodun","Isin","Kaiama","Moro","Offa","Oke Ero","Oyun","Pategi"],
+  "Lagos": ["Agege","Ajeromi-Ifelodun","Alimosho","Amuwo-Odofin","Apapa","Badagry","Epe","Eti Osa","Ibeju-Lekki","Ifako-Ijaiye","Ikeja","Ikorodu","Kosofe","Lagos Island","Lagos Mainland","Mushin","Ojo","Oshodi-Isolo","Shomolu","Surulere"],
+  "Nasarawa": ["Akwanga","Awe","Doma","Karu","Keana","Keffi","Kokona","Lafia","Nasarawa","Nasarawa Egon","Obi","Toto","Wamba"],
+  "Niger": ["Agaie","Agwara","Bida","Borgu","Bosso","Chanchaga","Edati","Gbako","Gurara","Katcha","Kontagora","Lapai","Lavun","Magama","Mariga","Mashegu","Mokwa","Moya","Paikoro","Rafi","Rijau","Shiroro","Suleja","Tafa","Wushishi"],
+  "Ogun": ["Abeokuta North","Abeokuta South","Ado-Odo/Ota","Ewekoro","Ifo","Ijebu East","Ijebu North","Ijebu North East","Ijebu Ode","Ikenne","Imeko Afon","Ipokia","Obafemi Owode","Odeda","Odogbolu","Ogun Waterside","Remo North","Shagamu","Yewa North","Yewa South"],
+  "Ondo": ["Akoko North East","Akoko North West","Akoko South East","Akoko South West","Akure North","Akure South","Ese Odo","Idanre","Ifedore","Ilaje","Ile Oluji/Okeigbo","Irele","Odigbo","Okitipupa","Ondo East","Ondo West","Ose","Owo"],
+  "Osun": ["Atakunmosa East","Atakunmosa West","Aiyedaade","Aiyedire","Boluwaduro","Boripe","Ede North","Ede South","Egbedore","Ejigbo","Ife Central","Ife East","Ife North","Ife South","Ifedayo","Ifelodun","Ila","Ilesa East","Ilesa West","Irepodun","Irewole","Isokan","Iwo","Obokun","Odo Otin","Ola Oluwa","Olorunda","Oriade","Orolu","Osogbo"],
+  "Oyo": ["Afijio","Akinyele","Atiba","Atisbo","Egbeda","Ibadan North","Ibadan North East","Ibadan North West","Ibadan South East","Ibadan South West","Ibarapa Central","Ibarapa East","Ibarapa North","Ido","Irepo","Iseyin","Itesiwaju","Iwajowa","Kajola","Lagelu","Ogbomosho North","Ogbomosho South","Ogo Oluwa","Olorunsogo","Oluyole","Ona Ara","Orelope","Ori Ire","Oyo East","Oyo West","Saki East","Saki West","Surulere"],
+  "Plateau": ["Barkin Ladi","Bassa","Bokkos","Jos East","Jos North","Jos South","Kanam","Kanke","Langtang North","Langtang South","Mangu","Mikang","Pankshin","Qua'an Pan","Riyom","Shendam","Wase"],
+  "Rivers": ["Abua/Odual","Ahoada East","Ahoada West","Akuku-Toru","Andoni","Asari-Toru","Bonny","Degema","Eleme","Emuoha","Etche","Gokana","Ikwerre","Khana","Obio/Akpor","Ogba/Egbema/Ndoni","Ogu/Bolo","Okrika","Omuma","Opobo/Nkoro","Oyigbo","Port Harcourt","Tai"],
+  "Sokoto": ["Binji","Bodinga","Dange Shuni","Gada","Goronyo","Gudu","Gwadabawa","Illela","Isa","Kebbe","Kware","Rabah","Sabon Birni","Shagari","Silame","Sokoto North","Sokoto South","Tambuwal","Tangaza","Tureta","Wamako","Wurno","Yabo"],
+  "Taraba": ["Ardo Kola","Bali","Donga","Gashaka","Gassol","Ibi","Jalingo","Karim Lamido","Kurmi","Lau","Sardauna","Takum","Ussa","Wukari","Yorro","Zing"],
+  "Yobe": ["Bade","Bursari","Damaturu","Fika","Fune","Geidam","Gujba","Gulani","Jakusko","Karasuwa","Machina","Nangere","Nguru","Potiskum","Tarmuwa","Yunusari","Yusufari"],
+  "Zamfara": ["Anka","Bakura","Birnin Magaji/Kiyaw","Bukkuyum","Bungudu","Gummi","Gusau","Isa","Kaura Namoda","Maradun","Maru","Shinkafi","Talata Mafara","Chafe","Zurmi","Gummi"],
+};
+
+/* ======================================================================
+   SUPABASE-BACKED APP CACHE
+   ====================================================================== */
+const appCache = {users:[], session:null, messages:[], questions:[], assignments:[], sessions:[], savedMessageIds:new Set(), savedQuestionIds:new Set(), savedAssignmentIds:new Set()};
+const DB = {
+  get users(){ return appCache.users; },
+  set users(value){ appCache.users = value; },
+  get session(){ return appCache.session; },
+  set session(value){ appCache.session = value; },
+};
+
+function supabase(){
+  if (!window.supabaseClient) throw new Error(window.__SUPABASE_CONFIG_ERROR__ || 'Supabase is not configured.');
+  return window.supabaseClient;
+}
+
+function reportCloudError(error){
+  console.error('Supabase request failed:', error);
+  const message = error?.message || 'The shared database could not be reached. Please try again.';
+  const errorBox = document.querySelector('.page.active .form-error');
+  if (errorBox) showError(errorBox.id, message);
+  else alert(message);
+}
+
+function privateUserData(user){
+  const {password, generatedStudentAccessCodes, ...data} = user;
+  return data;
+}
+
+function normalizeEmail(email){
+  return String(email || '').trim().toLowerCase();
+}
+
+function getSessionHistory(){
+  return appCache.sessions;
+}
+
+async function recordLoginSession(user){
+  const session = {
+    email: normalizeEmail(user.email),
+    name: user.name,
+    role: user.role,
+    timestamp: Date.now()
+  };
+  appCache.sessions.push(session);
+  const {error} = await supabase().from('login_sessions').insert({user_id:user.id, role:user.role, created_at:session.timestamp});
+  if (error) throw error;
+}
+
+function findUser(email){
+  const normalized = normalizeEmail(email);
+  return DB.users.find(u => normalizeEmail(u.email) === normalized);
+}
+
+function saveUser(u){
+  const normalizedUser = { ...u, email: normalizeEmail(u.email) };
+  const users = DB.users;
+  const idx = users.findIndex(x => normalizeEmail(x.email) === normalizeEmail(normalizedUser.email));
+  if (idx > -1) users[idx] = normalizedUser;
+  else users.push(normalizedUser);
+  DB.users = users;
+  if (normalizedUser.id && window.supabaseUser?.id === normalizedUser.id) void persistUser(normalizedUser).catch(reportCloudError);
+}
+
+async function persistUser(user){
+  if (!user.id) return;
+  const {error:profileError} = await supabase().from('profiles').update({
+    name:user.name,
+    age:user.age,
+    level:user.level,
+    progress:user.progress || {},
+    questions_asked:user.questionsAsked || 0,
+    last_active:user.lastActive || Date.now(),
+  }).eq('id',user.id);
+  if (profileError) throw profileError;
+  const {error:dataError} = await supabase().from('private_data').upsert({user_id:user.id,data:privateUserData(user)});
+  if (dataError) throw dataError;
+}
+
+function profileToUser(profile, privateData, codeRows, teacherProfile){
+  return {
+    ...privateData,
+    id:profile.id,
+    email:normalizeEmail(profile.email),
+    name:profile.name,
+    role:profile.role,
+    age:profile.age,
+    level:profile.level,
+    state:profile.state,
+    lga:profile.lga,
+    school:profile.school,
+    approved:profile.approved,
+    teacherId:profile.teacher_id,
+    linkedTeacherEmail:profile.teacher_email || teacherProfile?.email || null,
+    progress:profile.progress || {},
+    questionsAsked:profile.questions_asked || 0,
+    createdAt:Date.parse(profile.created_at) || Date.now(),
+    lastActive:profile.last_active || Date.now(),
+    generatedStudentAccessCodes:(codeRows || []).map(row=>({state:row.state,lga:row.lga,school:row.school,code:row.code,createdAt:row.created_at})),
+  };
+}
+
+async function loadSharedData(user){
+  const client = supabase();
+  const {data:profiles,error:profileError} = await client.from('profiles').select('*').or(`id.eq.${user.id},teacher_id.eq.${user.id}`);
+  if (profileError) throw profileError;
+  const profileIds = profiles.map(profile=>profile.id);
+  const codesRequest = user.role === 'teacher'
+    ? client.from('student_access_codes').select('*').eq('teacher_id',user.id)
+    : Promise.resolve({data:[],error:null});
+  const [{data:privateRows,error:privateError},{data:codeRows,error:codeError}] = await Promise.all([
+    client.from('private_data').select('*').in('user_id',profileIds),
+    codesRequest,
+  ]);
+  if (privateError) throw privateError;
+  if (codeError) throw codeError;
+  const {data:sessions,error:sessionError} = await client.from('login_sessions').select('role,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(20);
+  if (sessionError) throw sessionError;
+  const privateById = new Map(privateRows.map(row=>[row.user_id,row.data || {}]));
+  const teacherProfile = profiles.find(profile=>profile.id === (user.role==='student'?user.teacherId:null));
+  DB.users = profiles.map(profile=>profileToUser(
+    profile,
+    privateById.get(profile.id) || {},
+    codeRows.filter(row=>row.teacher_id===profile.id),
+    profile.id===user.id ? null : profile.role==='teacher' ? profile : teacherProfile
+  ));
+  appCache.sessions = sessions.map(row=>({email:user.email,name:user.name,role:row.role,timestamp:row.created_at}));
+  appCache.savedMessageIds = new Set();
+  appCache.savedQuestionIds = new Set();
+  appCache.savedAssignmentIds = new Set();
+  const relatedFilter = `student_id.eq.${user.id},teacher_id.eq.${user.id}`;
+  const [{data:messages,error:messageError},{data:questions,error:questionError},{data:assignments,error:assignmentError}] = await Promise.all([
+    client.from('inbox_messages').select('*').or(relatedFilter).order('created_at'),
+    client.from('teacher_questions').select('*').or(relatedFilter).order('asked_at'),
+    client.from('assignments').select('*').or(relatedFilter).order('created_at'),
+  ]);
+  if (messageError) throw messageError;
+  if (questionError) throw questionError;
+  if (assignmentError) throw assignmentError;
+  const profileById = new Map(DB.users.map(profile=>[profile.id,profile]));
+  appCache.messages = messages.map(row=>({id:row.id,studentEmail:profileById.get(row.student_id)?.email,teacherEmail:profileById.get(row.teacher_id)?.email,senderRole:row.sender_role,senderName:row.sender_name,text:row.message,createdAt:row.created_at}));
+  appCache.questions = questions.map(row=>({id:row.id,studentEmail:row.student_email,studentName:row.student_name,question:row.question,askedAt:row.asked_at,answered:row.answered,answer:row.answer,answeredAt:row.answered_at}));
+  appCache.assignments = assignments.map(row=>({id:row.id,teacherEmail:profileById.get(row.teacher_id)?.email,studentEmail:profileById.get(row.student_id)?.email,title:row.title,question:row.question,dueDate:row.due_date,createdAt:row.created_at,answer:row.answer,submittedAt:row.submitted_at,score:row.score,feedback:row.feedback,markedAt:row.marked_at,notificationSeen:row.notification_seen}));
+  appCache.savedQuestionIds = new Set(questions.map(row=>row.id));
+  appCache.savedMessageIds = new Set(messages.map(row=>row.id));
+  appCache.savedAssignmentIds = new Set(assignments.map(row=>row.id));
+  return findUser(user.email);
+}
+
+/* ======================================================================
+   RENDER HERO SYLLABUS PREVIEW
+   ====================================================================== */
+function renderHeroSyllabus(){
+  const el = document.getElementById('heroSyllabus');
+  el.innerHTML = SYLLABUS_BY_LEVEL.JSS1.slice(0,8).map((item,i)=>`<li><span class="syllabus-num">${String(i+1).padStart(2,'0')}</span><span>${item.q}</span></li>`).join('');
+}
+renderHeroSyllabus();
+
+/* ======================================================================
+   AUTH MODAL LOGIC
+   ====================================================================== */
+let signupRole = 'student';
+let loginRole = 'student';
+
+function isRealGmailAddress(email){
+  const normalized = normalizeEmail(email);
+  if (!normalized) return false;
+  const gmailRegex = /^[a-z0-9](?:[a-z0-9._%+-]*[a-z0-9])?@gmail\.com$/i;
+  return gmailRegex.test(normalized) && normalized.endsWith('@gmail.com');
+}
+
+function setLoginRole(role){
+  loginRole = role;
+  document.getElementById('loginRoleStudentBtn').classList.toggle('active', role === 'student');
+  document.getElementById('loginRoleTeacherBtn').classList.toggle('active', role === 'teacher');
+}
+
+function resetSignupForm(){
+  document.getElementById('signupName').value = '';
+  document.getElementById('signupEmail').value = '';
+  document.getElementById('signupPassword').value = '';
+  document.getElementById('signupAge').value = '';
+  document.getElementById('signupLevel').value = '';
+  document.getElementById('signupState').value = '';
+  document.getElementById('signupLga').value = '';
+  document.getElementById('signupLga').disabled = true;
+  document.getElementById('signupSchool').value = '';
+  document.getElementById('signupSchool').disabled = true;
+  document.getElementById('signupSchoolCustom').value = '';
+  document.getElementById('customSchoolField').style.display = 'none';
+  document.getElementById('signupCode').value = '';
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPassword').value = '';
+}
+
+function openAuth(mode){
+  document.getElementById('authOverlay').classList.add('open');
+  setAuthMode(mode);
+  if (mode === 'signup') {
+    setSignupRole(signupRole || 'student');
+  }
+  if (mode === 'login') {
+    setLoginRole(loginRole || 'student');
+  }
+}
+function closeAuth(){
+  document.getElementById('authOverlay').classList.remove('open');
+  clearErrors();
+  resetSignupForm();
+}
+function setAuthMode(mode){
+  clearErrors();
+  document.getElementById('tabLogin').classList.toggle('active', mode==='login');
+  document.getElementById('tabSignup').classList.toggle('active', mode==='signup');
+  document.getElementById('authLoginView').style.display = mode==='login' ? 'block':'none';
+  document.getElementById('authSignupView').style.display = mode==='signup' ? 'block':'none';
+  if (mode === 'login') setLoginRole(loginRole || 'student');
+  if (mode === 'signup') setSignupRole(signupRole || 'student');
+}
+function setSignupRole(role){
+  signupRole = role;
+  document.getElementById('roleStudentBtn').classList.toggle('active', role==='student');
+  document.getElementById('roleTeacherBtn').classList.toggle('active', role==='teacher');
+  document.getElementById('studentOnlyFields').style.display = role==='student' ? 'block':'none';
+  document.getElementById('teacherOnlyFields').style.display = role==='teacher' ? 'block':'none';
+  const label = document.getElementById('codeLabel');
+  const hint = document.getElementById('codeHint');
+  if(role==='student'){
+    label.textContent = 'School access code';
+    hint.textContent = "Required for students. Ask your teacher for this code — it's what links your work to their dashboard.";
+  } else {
+    label.textContent = 'Teacher registration code';
+    hint.textContent = "Required for teachers. This confirms you're registering as a teacher, not a student.";
+  }
+}
+
+/* ---- State / LGA / School cascading dropdowns ---- */
+function populateStates(selectId='signupState'){
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  sel.innerHTML = '<option value="" selected disabled>Select your state</option>';
+  Object.keys(NIGERIA).sort().forEach(state=>{
+    const opt = document.createElement('option');
+    opt.value = state; opt.textContent = state;
+    sel.appendChild(opt);
+  });
+}
+function onStateChange(){
+  const state = document.getElementById('signupState').value;
+  const lgaSel = document.getElementById('signupLga');
+  const schoolSel = document.getElementById('signupSchool');
+  lgaSel.innerHTML = '<option value="" selected disabled>Select your local government</option>';
+  schoolSel.innerHTML = '<option value="" selected disabled>Select your local government first</option>';
+  schoolSel.disabled = true;
+  if(!state){ lgaSel.disabled = true; return; }
+  lgaSel.disabled = false;
+  NIGERIA[state].forEach(lga=>{
+    const opt = document.createElement('option');
+    opt.value = lga; opt.textContent = lga;
+    lgaSel.appendChild(opt);
+  });
+}
+function onTeacherStateChange(){
+  const state = document.getElementById('teacherState').value;
+  const lgaSel = document.getElementById('teacherLga');
+  const schoolSel = document.getElementById('teacherSchool');
+  lgaSel.innerHTML = '<option value="" selected disabled>Select your local government</option>';
+  schoolSel.innerHTML = '<option value="" selected disabled>Select your local government first</option>';
+  schoolSel.disabled = true;
+  if(!state){ lgaSel.disabled = true; return; }
+  lgaSel.disabled = false;
+  NIGERIA[state].forEach(lga=>{
+    const opt = document.createElement('option');
+    opt.value = lga; opt.textContent = lga;
+    lgaSel.appendChild(opt);
+  });
+}
+function populateSchoolOptions(schoolSel, lga){
+  schoolSel.innerHTML = '';
+  if(!lga){ schoolSel.disabled = true; return; }
+  schoolSel.disabled = false;
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.selected = true; placeholder.disabled = true;
+  placeholder.textContent = 'Select your school';
+  schoolSel.appendChild(placeholder);
+  // Generic junior secondary school naming pattern for this LGA — a free-text fallback
+  // field is offered below for any school not in this list.
+  ["Community Secondary School", "Government Secondary School", "Model Junior Secondary School", "Community Junior Secondary School"].forEach(prefix=>{
+    const opt = document.createElement('option');
+    const name = `${prefix}, ${lga}`;
+    opt.value = name; opt.textContent = name;
+    schoolSel.appendChild(opt);
+  });
+  const otherOpt = document.createElement('option');
+  otherOpt.value = '__other__';
+  otherOpt.textContent = "My school isn't listed — let me type it";
+  schoolSel.appendChild(otherOpt);
+}
+function onLgaChange(){
+  const lga = document.getElementById('signupLga').value;
+  const schoolSel = document.getElementById('signupSchool');
+  document.getElementById('customSchoolField').style.display = 'none';
+  document.getElementById('signupSchoolCustom').value = '';
+  populateSchoolOptions(schoolSel, lga);
+}
+function onSchoolSelectChange(){
+  const schoolSel = document.getElementById('signupSchool');
+  const customField = document.getElementById('customSchoolField');
+  const customInput = document.getElementById('signupSchoolCustom');
+  if(schoolSel.value === '__other__'){
+    customField.style.display = 'block';
+    customInput.focus();
+  } else {
+    customField.style.display = 'none';
+    customInput.value = '';
+  }
+}
+function onTeacherLgaChange(){
+  const lga = document.getElementById('teacherLga').value;
+  const schoolSel = document.getElementById('teacherSchool');
+  document.getElementById('teacherCustomSchoolField').style.display = 'none';
+  document.getElementById('teacherSchoolCustom').value = '';
+  populateSchoolOptions(schoolSel, lga);
+}
+function onTeacherSchoolSelectChange(){
+  const schoolSel = document.getElementById('teacherSchool');
+  const customField = document.getElementById('teacherCustomSchoolField');
+  const customInput = document.getElementById('teacherSchoolCustom');
+  if(schoolSel.value === '__other__'){
+    customField.style.display = 'block';
+    customInput.focus();
+  } else {
+    customField.style.display = 'none';
+    customInput.value = '';
+  }
+}
+populateStates();
+populateStates('teacherState');
+function clearErrors(){
+  document.getElementById('loginError').classList.remove('show');
+  document.getElementById('signupError').classList.remove('show');
+  document.getElementById('signupSuccess').classList.remove('show');
+}
+function showError(id, msg){
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function generateStatePrefix(stateName, secondaryName = ''){
+  const combined = `${stateName || ''} ${secondaryName || ''}`.toUpperCase();
+  if (combined.includes('ABUJA') || combined.includes('FEDERAL CAPITAL') || combined.includes('FCT')) {
+    return 'ABUJA';
+  }
+  return String(stateName || '').replace(/[^A-Za-z]/g, '').toUpperCase();
+}
+
+function generateTeacherAccessCode(stateName, lgaName = ''){
+  return `${generateStatePrefix(stateName, lgaName)}-TEACH`;
+}
+
+function getAllStudentAccessCodes(){
+  const allUsers = DB.users || [];
+  const codes = [];
+  allUsers.forEach(user => {
+    if (!user || user.role !== 'teacher') return;
+    const teacherCodes = Array.isArray(user.generatedStudentAccessCodes) ? user.generatedStudentAccessCodes : [];
+    teacherCodes.forEach(item => {
+      if (item && item.code) codes.push({ ...item, teacherEmail: normalizeEmail(user.email) });
+    });
+  });
+  return codes;
+}
+
+function generateStudentAccessCode(stateName, schoolName, lgaName = ''){
+  const statePart = generateStatePrefix(stateName, lgaName || schoolName).toLowerCase();
+  return `${statePart}-jss-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`;
+}
+
+function normalizeAccessCode(value){
+  return String(value || '').trim().toUpperCase();
+}
+
+function normalizeSchoolDetail(value){
+  return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+async function handleSignup(){
+  clearErrors();
+  const name = document.getElementById('signupName').value.trim();
+  const email = normalizeEmail(document.getElementById('signupEmail').value);
+  const password = document.getElementById('signupPassword').value;
+  const code = document.getElementById('signupCode').value.trim().toUpperCase();
+
+  if(!name || !email || !password){
+    showError('signupError', 'Please fill in your name, email, and password.'); return;
+  }
+  if(password.length < 6){
+    showError('signupError', 'Password must be at least 6 characters.'); return;
+  }
+  if(!isRealGmailAddress(email)){
+    showError('signupError', 'Please enter a valid Gmail address, for example: name@gmail.com'); return;
+  }
+  if(findUser(email)){
+    showError('signupError', 'An account with this email already exists. Try logging in.'); return;
+  }
+
+  let age = null, state = null, lga = null, school = null, level = null, linkedTeacherEmail = null;
+  if(signupRole === 'student'){
+    age = document.getElementById('signupAge').value;
+    level = document.getElementById('signupLevel').value;
+    state = document.getElementById('signupState').value;
+    lga = document.getElementById('signupLga').value;
+    school = document.getElementById('signupSchool').value;
+    if(school === '__other__'){
+      school = document.getElementById('signupSchoolCustom').value.trim();
+    }
+    if(!age || age < 8 || age > 25){
+      showError('signupError', 'Please enter a valid age.'); return;
+    }
+    if(!level){
+      showError('signupError', 'Please select your class (JSS 1, 2, or 3).'); return;
+    }
+    if(!state || !lga || !school){
+      showError('signupError', 'Please select your state, local government, and school name.'); return;
+    }
+  }
+
+  if(signupRole === 'teacher'){
+    state = document.getElementById('teacherState').value;
+    lga = document.getElementById('teacherLga').value;
+    school = document.getElementById('teacherSchool').value;
+    if(school === '__other__'){
+      school = document.getElementById('teacherSchoolCustom').value.trim();
+    }
+    if(!state || !lga || !school){
+      showError('signupError', 'Please select your state, local government, and school name.'); return;
+    }
+    const expectedTeacherCode = generateTeacherAccessCode(state, lga);
+    if(code !== expectedTeacherCode){
+      showError('signupError', `That teacher access code is wrong. For ${state.toUpperCase()} the correct code is ${expectedTeacherCode}.`); return;
+    }
+  }
+
+  let approved = false;
+  if(signupRole === 'student'){
+    if(!code){
+      showError('signupError', 'Students need an access code to register. Ask your teacher for it.'); return;
+    }
+    const {data:validCode,error:codeError} = await supabase().rpc('validate_student_code', {
+      p_code:code,p_state:state,p_lga:lga,p_school:school,
+    });
+    if (codeError) { showError('signupError', codeError.message || 'Could not validate that access code. Please try again.'); return; }
+    approved = validCode === true;
+    if(!approved){
+      showError('signupError', 'That student access code is incorrect for this state, local government, or school.'); return;
+    }
+  }
+
+  const {data,error} = await supabase().auth.signUp({
+    email,
+    password,
+    options:{
+      emailRedirectTo:window.location.origin,
+      data:{name,role:signupRole,age:age ? Number(age) : null,level,state,lga,school,access_code:code},
+    },
+  });
+  if (error) { showError('signupError', error.message); return; }
+  if (!data.session) {
+    const success = document.getElementById('signupSuccess');
+    success.textContent = 'Your account has been created. Check your email for a confirmation link, then log in.';
+    success.classList.add('show');
+    return;
+  }
+  window.supabaseUser = data.user;
+  const user = await loadSharedData({id:data.user.id,role:signupRole});
+  if (!user) { showError('signupError', 'Your account was created, but its profile could not be loaded. Please log in again.'); return; }
+  user.isNewSignup = true;
+  DB.session = {email:user.email};
+  try { await recordLoginSession(user); } catch (sessionError) { reportCloudError(sessionError); }
+  closeAuth();
+  enterApp(user);
+}
+
+async function handleLogin(){
+  clearErrors();
+  const email = normalizeEmail(document.getElementById('loginEmail').value);
+  const password = document.getElementById('loginPassword').value;
+
+  if(!isRealGmailAddress(email)){
+    showError('loginError', 'Please enter a valid Gmail address, for example: name@gmail.com'); return;
+  }
+
+  const {data,error} = await supabase().auth.signInWithPassword({email,password});
+  if(error){ showError('loginError', 'Could not sign in. Check your email, password, and email confirmation.'); return; }
+  window.supabaseUser = data.user;
+  const user = await loadSharedData({id:data.user.id,role:data.user.user_metadata?.role});
+  if(!user || user.role !== loginRole){
+    await supabase().auth.signOut();
+    window.supabaseUser = null;
+    showError('loginError', loginRole === 'student'
+      ? 'This account is not registered as a student.'
+      : 'This account is not registered as a teacher.');
+    return;
+  }
+  user.lastActive = Date.now();
+  saveUser(user);
+  DB.session = { email: user.email };
+  try { await recordLoginSession(user); } catch (sessionError) { reportCloudError(sessionError); }
+  closeAuth();
+  enterApp(user);
+}
+
+function logout(){
+  document.getElementById('logoutOverlay').classList.add('open');
+}
+function closeLogoutConfirm(){
+  document.getElementById('logoutOverlay').classList.remove('open');
+}
+async function confirmLogout(){
+  try { await supabase().auth.signOut(); } catch (error) { reportCloudError(error); }
+  window.supabaseUser = null;
+  DB.session = null;
+  currentUser = null;
+  document.getElementById('logoutOverlay').classList.remove('open');
+  document.getElementById('app').classList.remove('open');
+  document.getElementById('site').style.display = 'block';
+  updateHomeNav();
+  window.scrollTo(0,0);
+}
+
+/* Home page nav reflects whether someone is currently logged in */
+function updateHomeNav(){
+  const loggedIn = !!DB.session;
+  document.getElementById('navAuthLinksLoggedOut').style.display = loggedIn ? 'none' : 'flex';
+  document.getElementById('navAuthLinksLoggedIn').style.display = loggedIn ? 'flex' : 'none';
+}
+function goHome(e){
+  e.preventDefault();
+  document.getElementById('app').classList.remove('open');
+  document.getElementById('site').style.display = 'block';
+  updateHomeNav();
+  window.scrollTo(0,0);
+}
+function goToApp(){
+  const session = DB.session;
+  if(!session) return;
+  const user = findUser(session.email);
+  if(user) enterApp(user);
+}
+
+/* ======================================================================
+   APP SHELL
+   ====================================================================== */
+let currentUser = null;
+let selectedStudentCodeSchools = [];
+
+const STUDENT_WELCOME_MESSAGES = [
+  { emoji:"🌟", title:"Welcome back!", msg:"Every expert coder started exactly where you are now. Keep going — you're doing great." },
+  { emoji:"🚀", title:"Great to see you!", msg:"One topic at a time, one question at a time — that's all it takes. You've got this." },
+  { emoji:"💡", title:"Welcome back!", msg:"Mistakes are how programmers learn. Don't be afraid to try things out and ask Miss Ada anything." },
+  { emoji:"🎯", title:"Let's keep learning!", msg:"You're building a skill that very few people your age have. Be proud of the progress you're making." },
+  { emoji:"📘", title:"Welcome back!", msg:"Programming can feel tricky at first, but it gets easier the more you practice. Let's pick up where you left off." },
+];
+const STUDENT_FIRST_WELCOME = { emoji:"🎉", title:"Welcome to CodeStart!", msg:"We're so glad you're here. Learning to code is one of the most exciting things you can do — and every question you ask brings you one step closer. Let's get started!" };
+
+function resetChatForFreshLogin(user){
+  if (!user) return;
+  const existingHistory = Array.isArray(user.chatLog) ? user.chatLog.slice() : [];
+  if (existingHistory.length > 0) {
+    user.chatHistoryBackup = existingHistory;
+  } else {
+    user.chatHistoryBackup = [];
+  }
+  user.chatLog = [];
+  saveUser(user);
+}
+
+function restorePreviousChat(){
+  if (!currentUser) return;
+  const backup = Array.isArray(currentUser.chatHistoryBackup) ? currentUser.chatHistoryBackup : [];
+  if (backup.length === 0) return;
+  currentUser.chatLog = backup.slice();
+  const restoreBtn = document.getElementById('restoreChatBtn');
+  if (restoreBtn) restoreBtn.style.display = 'none';
+  renderChatHistory();
+  saveUser(currentUser);
+}
+
+function updateRestoreChatButton(){
+  const restoreBtn = document.getElementById('restoreChatBtn');
+  if (!restoreBtn) return;
+  const hasBackup = !!currentUser && Array.isArray(currentUser.chatHistoryBackup) && currentUser.chatHistoryBackup.length > 0;
+  restoreBtn.style.display = hasBackup ? 'inline-flex' : 'none';
+}
+
+function enterApp(user){
+  if (!currentUser || normalizeEmail(currentUser.email) !== normalizeEmail(user.email)) selectedStudentCodeSchools = [];
+  currentUser = user;
+  if (user.role === 'student') {
+    resetChatForFreshLogin(user);
+  }
+  document.getElementById('site').style.display = 'none';
+  document.getElementById('app').classList.add('open');
+  document.getElementById('whoName').textContent = user.name;
+  document.getElementById('whoRole').textContent = user.role === 'student' ? 'Student' : 'Teacher';
+  updateHomeNav();
+
+  if(user.role === 'student'){
+    buildStudentNav();
+    renderStudentDashboard();
+    renderStudentSyllabus();
+    renderStudentAccount();
+    renderStudentInbox();
+    renderChatChips();
+    renderChatHistory();
+    updateRestoreChatButton();
+    goTo('s-dashboard');
+    showStudentWelcome(user);
+  } else {
+    buildTeacherNav();
+    renderTeacherDashboard();
+    renderTeacherStudents();
+    renderTeacherQuestions();
+    renderTeacherAssignments();
+    renderTeacherAccount();
+    goTo('t-dashboard');
+  }
+}
+
+function showStudentWelcome(user){
+  const pick = user.isNewSignup
+    ? STUDENT_FIRST_WELCOME
+    : STUDENT_WELCOME_MESSAGES[Math.floor(Math.random()*STUDENT_WELCOME_MESSAGES.length)];
+  document.getElementById('welcomeEmoji').textContent = pick.emoji;
+  document.getElementById('welcomeTitle').textContent = user.isNewSignup ? pick.title : `${pick.title.replace('!','')}, ${user.name.split(' ')[0]}!`;
+  document.getElementById('welcomeMessage').textContent = pick.msg;
+  document.getElementById('welcomeOverlay').classList.add('open');
+  if(user.isNewSignup){
+    user.isNewSignup = false;
+    saveUser(user);
+  }
+}
+function closeWelcome(){
+  document.getElementById('welcomeOverlay').classList.remove('open');
+  showPendingGradeNotice();
+}
+function showPendingGradeNotice(){
+  if (!currentUser || currentUser.role !== 'student') return;
+  const pending = getAssignments().filter(item => normalizeEmail(item.studentEmail) === normalizeEmail(currentUser.email) && item.score !== null && item.score !== undefined && !item.notificationSeen);
+  if (!pending.length) return;
+  document.getElementById('gradeNoticeList').innerHTML = pending.map(item => `
+    <div class="qcard" style="margin:0 0 12px;">
+      <div class="qmeta">${escapeHtml(item.title)}</div>
+      <div class="serif" style="font-size:1.8rem;font-weight:600;">${escapeHtml(item.score)}/100</div>
+      ${item.feedback ? `<p style="margin:6px 0 0;white-space:pre-wrap;">${escapeHtml(item.feedback)}</p>` : ''}
+    </div>`).join('');
+  document.getElementById('gradeNoticeOverlay').classList.add('open');
+}
+function closeGradeNotice(){
+  const assignments = getAssignments();
+  assignments.forEach(item => {
+    if (normalizeEmail(item.studentEmail) === normalizeEmail(currentUser.email) && item.score !== null && item.score !== undefined) item.notificationSeen = true;
+  });
+  setAssignments(assignments);
+  document.getElementById('gradeNoticeOverlay').classList.remove('open');
+  goTo('s-inbox');
+}
+
+function buildStudentNav(){
+  document.getElementById('sideNav').innerHTML = `
+    <li><button class="side-link" data-p="s-dashboard" onclick="goTo('s-dashboard')"><span class="ic">🏠</span>Dashboard</button></li>
+    <li><button class="side-link" data-p="s-syllabus" onclick="goTo('s-syllabus')"><span class="ic">📘</span>Syllabus</button></li>
+    <li><button class="side-link" data-p="s-chat" onclick="goTo('s-chat')"><span class="ic">💬</span>Tutor chat</button></li>
+    <li><button class="side-link" data-p="s-inbox" onclick="goTo('s-inbox')"><span class="ic">✉️</span>Inbox</button></li>
+    <li><button class="side-link" data-p="s-account" onclick="goTo('s-account')"><span class="ic">👤</span>My account</button></li>
+    <li class="nav-logout-item"><button class="side-link logout-link" onclick="logout()"><span class="ic">🚪</span>Log out</button></li>
+  `;
+}
+function buildTeacherNav(){
+  document.getElementById('sideNav').innerHTML = `
+    <li><button class="side-link" data-p="t-dashboard" onclick="goTo('t-dashboard')"><span class="ic">🏠</span>Dashboard</button></li>
+    <li><button class="side-link" data-p="t-students" onclick="goTo('t-students')"><span class="ic">🎓</span>Students</button></li>
+    <li><button class="side-link" data-p="t-assignments" onclick="goTo('t-assignments')"><span class="ic">📝</span>Assignments</button></li>
+    <li><button class="side-link" data-p="t-questions" onclick="goTo('t-questions')"><span class="ic">❓</span>Student questions</button></li>
+    <li><button class="side-link" data-p="t-account" onclick="goTo('t-account')"><span class="ic">👤</span>My account</button></li>
+    <li class="nav-logout-item"><button class="side-link logout-link" onclick="logout()"><span class="ic">🚪</span>Log out</button></li>
+  `;
+}
+
+function toggleMobileNav(forceOpen){
+  const sidebar = document.getElementById('appSidebar');
+  const toggle = document.getElementById('mobileNavToggle');
+  const backdrop = document.getElementById('mobileNavBackdrop');
+  const main = document.querySelector('.main');
+  const drawerOpen = sidebar.classList.contains('mobile-open');
+  const compact = sidebar.classList.contains('mobile-compact');
+  if (typeof forceOpen === 'boolean') {
+    sidebar.classList.toggle('mobile-open', forceOpen);
+    sidebar.classList.remove('mobile-compact');
+  } else if (!drawerOpen) {
+    sidebar.classList.add('mobile-open');
+    sidebar.classList.remove('mobile-compact');
+  } else if (compact) {
+    sidebar.classList.remove('mobile-compact');
+  } else {
+    sidebar.classList.remove('mobile-open');
+    sidebar.classList.remove('mobile-compact');
+  }
+  const expanded = sidebar.classList.contains('mobile-open') && !sidebar.classList.contains('mobile-compact');
+  main.classList.toggle('mobile-nav-compact', sidebar.classList.contains('mobile-open') && sidebar.classList.contains('mobile-compact'));
+  backdrop.classList.toggle('active', expanded);
+  toggle.setAttribute('aria-expanded', String(expanded));
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') toggleMobileNav(false);
+});
+
+function goTo(pageId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+pageId).classList.add('active');
+  document.querySelectorAll('.side-link').forEach(l=>l.classList.toggle('active', l.dataset.p===pageId));
+  if(pageId==='s-chat'){
+    const body = document.getElementById('chatBody');
+    body.scrollTop = body.scrollHeight;
+  }
+  if(pageId==='s-inbox') renderStudentInbox();
+  if(pageId==='t-assignments') renderTeacherAssignments();
+  if (pageId === 's-inbox' || pageId === 't-dashboard' || pageId === 't-students' || pageId === 't-questions' || pageId === 't-assignments') {
+    void refreshCurrentUserData();
+  }
+  const sidebar = document.getElementById('appSidebar');
+  const mobileLayout = window.matchMedia('(max-width: 860px)').matches;
+  if (mobileLayout && sidebar.classList.contains('mobile-open')) {
+    const wasCompact = sidebar.classList.contains('mobile-compact');
+    sidebar.classList.toggle('mobile-compact', !wasCompact);
+    document.querySelector('.main').classList.toggle('mobile-nav-compact', !wasCompact);
+    document.getElementById('mobileNavBackdrop').classList.remove('active');
+    document.getElementById('mobileNavToggle').setAttribute('aria-expanded', String(wasCompact));
+  } else if (!mobileLayout) {
+    toggleMobileNav(false);
+  }
+}
+
+/* ======================================================================
+   STUDENT VIEWS
+   ====================================================================== */
+function progressCount(user){ return Object.values(user.progress||{}).filter(Boolean).length; }
+
+function renderStudentDashboard(){
+  const u = currentUser;
+  const syllabus = currentSyllabus();
+  document.getElementById('studentGreeting').textContent = `Welcome back, ${u.name.split(' ')[0]}`;
+  document.getElementById('statTopicsDone').textContent = `${progressCount(u)}/${syllabus.length}`;
+  document.getElementById('statQuestions').textContent = u.questionsAsked || 0;
+  document.getElementById('statStatus').textContent = u.approved ? 'Visible' : 'Private';
+}
+
+function renderStudentSyllabus(){
+  const u = currentUser;
+  const syllabus = currentSyllabus();
+  document.getElementById('syllabusTitle').textContent = `Your ${normalizeStudentLevel(u.level)} syllabus`;
+  document.getElementById('syllabusSub').textContent = `${syllabus.length} topics. Tap "Learn this" to have the tutor walk you through one.`;
+  const el = document.getElementById('studentLessonList');
+  el.innerHTML = syllabus.map((item,i)=>{
+    const done = !!u.progress[i];
+    return `
+      <div class="lesson-row ${done?'done':''}">
+        <div class="lnum">${done?'✓':String(i+1).padStart(2,'0')}</div>
+        <div class="ltext">
+          <div class="ltitle">${item.q}</div>
+          <div class="ldesc">${item.tag}</div>
+        </div>
+        <button class="btn btn-sm btn-coral" onclick="learnTopic(${i})">Learn this</button>
+        <button class="btn btn-sm ${done?'':''}" onclick="toggleTopic(${i})">${done?'Mark undone':'Mark done'}</button>
+      </div>`;
+  }).join('');
+}
+
+function toggleTopic(i){
+  currentUser.progress[i] = !currentUser.progress[i];
+  saveUser(currentUser);
+  renderStudentSyllabus();
+  renderStudentDashboard();
+}
+
+/* "Learn this" — opens the chat and has the tutor explain the topic conversationally,
+   then asks if the student has questions. */
+function learnTopic(i){
+  const syllabus = currentSyllabus();
+  const item = syllabus[i];
+  goTo('s-chat');
+  setTimeout(()=>{
+    appendUserMessage(`Can you teach me: ${item.q}`);
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      appendBotMessage(item.a);
+      setTimeout(()=>{
+        appendBotMessage("Does that make sense so far? Ask me anything about it, or let me know if you'd like another example. 🙂");
+      }, 500);
+    }, 650);
+  }, 60);
+}
+
+function renderStudentAccount(){
+  const u = currentUser;
+  document.getElementById('accName').textContent = u.name;
+  document.getElementById('accEmail').textContent = u.email + (u.level ? ` · ${u.level}` : '');
+  const schoolEl = document.getElementById('accSchool');
+  if(u.school){
+    schoolEl.innerHTML = `${u.school}<br>${u.lga} LGA, ${u.state} State${u.age ? ' · Age '+u.age : ''}`;
+  } else {
+    schoolEl.textContent = 'Not provided.';
+  }
+  const badge = document.getElementById('accBadge');
+  const status = document.getElementById('accCodeStatus');
+  if(u.approved){
+    status.textContent = "You signed up with your school's access code, so your activity and progress are visible on your teacher's dashboard.";
+    badge.textContent = 'Visible to teacher';
+    badge.className = 'badge-source badge-approved';
+  } else {
+    status.textContent = "You don't have an approved access code on file, so your activity stays private and won't appear on any teacher dashboard.";
+    badge.textContent = 'Private';
+    badge.className = 'badge-source badge-private';
+  }
+}
+
+/* ======================================================================
+   CHATBOT LOGIC
+   ====================================================================== */
+function renderChatChips(){
+  const el = document.getElementById('chatChips');
+  const syllabus = currentSyllabus();
+  el.innerHTML = syllabus.slice(0,6).map((item,i)=>`<button class="chip" onclick="chipAsk(${i})">${item.q}</button>`).join('');
+}
+function chipAsk(i){
+  const syllabus = currentSyllabus();
+  document.getElementById('chatInput').value = syllabus[i].q;
+  sendChat();
+}
+
+function renderChatHistory(){
+  const body = document.getElementById('chatBody');
+  body.innerHTML = '';
+  if(!currentUser.chatLog || currentUser.chatLog.length===0){
+    appendBotMessage(`Hi ${currentUser.name.split(' ')[0]}! I'm Miss Ada, your coding tutor. 👋\n\nAsk me anything from your syllabus — like "what is a variable?" or "what does print() do?" — and I'll explain it simply.`, false);
+    updateRestoreChatButton();
+    return;
+  }
+  currentUser.chatLog.forEach(m=>{
+    appendMessage(m.role, m.text, false, !!m.fromTeacher);
+  });
+  updateRestoreChatButton();
+}
+
+function appendMessage(role, text, scroll=true, fromTeacher=false){
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (role==='user' ? 'user':'bot') + (fromTeacher ? ' teacher-msg' : '');
+  div.innerHTML = text;
+  body.appendChild(div);
+  if(scroll) body.scrollTop = body.scrollHeight;
+}
+function appendBotMessage(text, log=true){
+  appendMessage('bot', text);
+  if(log){
+    currentUser.chatLog.push({role:'bot', text, at:Date.now()});
+    saveUser(currentUser);
+  }
+}
+function appendUserMessage(text){
+  appendMessage('user', text);
+  currentUser.chatLog.push({role:'user', text, at:Date.now()});
+  currentUser.questionsAsked = (currentUser.questionsAsked||0) + 1;
+  currentUser.lastActive = Date.now();
+  saveUser(currentUser);
+}
+
+function showTyping(){
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.className = 'typing';
+  div.id = 'typingIndicator';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function hideTyping(){
+  const t = document.getElementById('typingIndicator');
+  if(t) t.remove();
+}
+
+function matchSyllabus(input){
+  const q = input.toLowerCase().trim().replace(/[?!.]/g,'');
+  const syllabus = currentSyllabus();
+  let best = null, bestScore = 0;
+  syllabus.forEach(item=>{
+    const target = item.q.toLowerCase().replace(/[?!.]/g,'');
+    if(target === q){ best = item; bestScore = 999; return; }
+    const targetWords = target.split(/\s+/).filter(w=>w.length>2 && !['what','does','mean','programming','the','and','used','for'].includes(w));
+    let score = 0;
+    targetWords.forEach(w=>{ if(q.includes(w)) score++; });
+    if(score > bestScore){ bestScore = score; best = item; }
+  });
+  return bestScore >= 2 ? best : null;
+}
+
+const FALLBACKS = [
+  "That's a great question! I've sent it to your teacher since it's outside my starter topics — they'll get back to you here soon. In the meantime, try asking about variables, loops, functions, if statements, or anything in your syllabus list.",
+  "I don't have a confident answer for that one, so I've forwarded it to your teacher — look out for their reply here. Meanwhile, pick a topic from the chips above and I'll happily explain it!",
+];
+
+function getTeacherQuestions(){ return appCache.questions; }
+function setTeacherQuestions(value){
+  appCache.questions = value;
+  void persistTeacherQuestions(value).catch(reportCloudError);
+}
+function getInboxMessages(){ return appCache.messages; }
+function setInboxMessages(value){
+  appCache.messages = value;
+  void persistInboxMessages(value).catch(reportCloudError);
+}
+function getAssignments(){ return appCache.assignments; }
+function setAssignments(value){
+  appCache.assignments = value;
+  void persistAssignments(value).catch(reportCloudError);
+}
+
+async function persistTeacherQuestions(questions){
+  const client = supabase();
+  for (const question of questions) {
+    const student = findUser(question.studentEmail);
+    if (!student) continue;
+    if (appCache.savedQuestionIds.has(question.id)) {
+      if (currentUser.role === 'teacher' && question.answered) {
+        const {error} = await client.from('teacher_questions').update({answered:true,answer:question.answer,answered_at:question.answeredAt}).eq('id',question.id).eq('teacher_id',currentUser.id);
+        if (error) throw error;
+      }
+      continue;
+    }
+    const {error} = await client.from('teacher_questions').insert({
+      id:question.id,student_id:student.id,teacher_id:student.teacherId,
+      student_email:normalizeEmail(student.email),student_name:student.name,
+      question:question.question,asked_at:question.askedAt,answered:false,
+    });
+    if (error) throw error;
+    appCache.savedQuestionIds.add(question.id);
+  }
+}
+
+async function persistInboxMessages(messages){
+  const client = supabase();
+  for (const message of messages) {
+    if (appCache.savedMessageIds.has(message.id)) continue;
+    const student = findUser(message.studentEmail);
+    const teacherId = student?.teacherId || findUser(message.teacherEmail)?.id;
+    if (!student || !teacherId || !currentUser?.id) continue;
+    const {error} = await client.from('inbox_messages').insert({
+      id:message.id,student_id:student.id,teacher_id:teacherId,sender_id:currentUser.id,
+      sender_role:message.senderRole,sender_name:message.senderName,message:message.text,created_at:message.createdAt,
+    });
+    if (error) throw error;
+    appCache.savedMessageIds.add(message.id);
+  }
+}
+
+async function persistAssignments(assignments){
+  const client = supabase();
+  for (const assignment of assignments) {
+    if (!appCache.savedAssignmentIds.has(assignment.id)) {
+      const student = findUser(assignment.studentEmail);
+      if (!student) continue;
+      const {error} = await client.from('assignments').insert({
+        id:assignment.id,teacher_id:currentUser.id,student_id:student.id,title:assignment.title,
+        question:assignment.question,due_date:assignment.dueDate || null,created_at:assignment.createdAt,
+        answer:'',score:null,feedback:'',notification_seen:false,
+      });
+      if (error) throw error;
+      appCache.savedAssignmentIds.add(assignment.id);
+    } else if (currentUser.role === 'student') {
+      const {error} = await client.from('assignments').update({answer:assignment.answer,submitted_at:assignment.submittedAt,notification_seen:assignment.notificationSeen}).eq('id',assignment.id).eq('student_id',currentUser.id);
+      if (error) throw error;
+    } else if (currentUser.role === 'teacher') {
+      const {error} = await client.from('assignments').update({score:assignment.score,feedback:assignment.feedback,marked_at:assignment.markedAt}).eq('id',assignment.id).eq('teacher_id',currentUser.id);
+      if (error) throw error;
+    }
+  }
+}
+
+function addInboxMessage(student, senderRole, senderName, text){
+  const messages = getInboxMessages();
+  messages.push({
+    id: 'm_' + Date.now() + '_' + Math.floor(Math.random()*10000),
+    studentEmail: normalizeEmail(student.email),
+    teacherEmail: normalizeEmail(student.linkedTeacherEmail),
+    senderRole, senderName, text, createdAt: Date.now(),
+  });
+  setInboxMessages(messages);
+}
+
+function renderStudentInbox(){
+  if (!currentUser || currentUser.role !== 'student') return;
+  const messages = getInboxMessages().filter(item => normalizeEmail(item.studentEmail) === normalizeEmail(currentUser.email));
+  const messagesHost = document.getElementById('studentInboxMessages');
+  messagesHost.innerHTML = messages.length
+    ? `<div class="inbox-thread">${messages.map(item => `
+        <div class="inbox-message ${item.senderRole === 'student' ? 'student' : 'teacher'}">
+          <div class="qmeta"><strong>${escapeHtml(item.senderName)}</strong> · ${new Date(item.createdAt).toLocaleString()}</div>
+          ${escapeHtml(item.text)}
+        </div>`).join('')}</div>`
+    : '<p style="color:var(--muted);">Your teacher’s replies and messages will appear here.</p>';
+  const compose = document.querySelector('.student-compose');
+  if (compose) compose.style.display = currentUser.linkedTeacherEmail ? 'block' : 'none';
+  const assignments = getAssignments().filter(item => normalizeEmail(item.studentEmail) === normalizeEmail(currentUser.email)).sort((a,b) => b.createdAt-a.createdAt);
+  const assignmentsHost = document.getElementById('studentAssignments');
+  assignmentsHost.innerHTML = assignments.length ? assignments.map(item => `
+    <div class="qcard">
+      <div class="qmeta">${item.dueDate ? `Due ${escapeHtml(item.dueDate)}` : 'No due date'} · ${new Date(item.createdAt).toLocaleDateString()}</div>
+      <h3>${escapeHtml(item.title)}</h3>
+      <div class="assignment-question">${escapeHtml(item.question)}</div>
+      ${item.submittedAt ? `<div class="qanswer"><span class="qa-label">Your answer</span>${escapeHtml(item.answer)}</div>` : `
+        <label for="answer-${escapeHtml(item.id)}" style="display:block;font-size:0.84rem;font-weight:600;margin-bottom:6px;">Your answer</label>
+        <textarea id="answer-${escapeHtml(item.id)}" style="width:100%;min-height:100px;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;font:inherit;resize:vertical;"></textarea>
+        <button class="btn btn-coral btn-sm" style="margin-top:10px;" onclick="submitAssignment('${escapeHtml(item.id)}')">Submit answer</button>`}
+      ${item.score !== null && item.score !== undefined ? `<div class="qanswer"><span class="qa-label">Teacher’s feedback · Score ${escapeHtml(item.score)}/100</span>${item.feedback ? escapeHtml(item.feedback) : 'Your teacher has marked this assignment. Keep up your effort!'}</div>` : item.submittedAt ? '<p class="pill pill-pending" style="display:inline-block;margin:12px 0 0;">Submitted · waiting for marking</p>' : ''}
+    </div>`).join('') : '<p style="color:var(--muted);">No assignments yet. Your teacher’s homework will appear here.</p>';
+}
+
+function sendStudentMessage(){
+  const text = document.getElementById('studentMessageInput').value.trim();
+  if (!text || !currentUser || currentUser.role !== 'student' || !currentUser.linkedTeacherEmail) return;
+  addInboxMessage(currentUser, 'student', currentUser.name, text);
+  document.getElementById('studentMessageInput').value = '';
+  renderStudentInbox();
+}
+
+function submitAssignment(assignmentId){
+  if (!currentUser || currentUser.role !== 'student') return;
+  const answerField = document.getElementById('answer-' + assignmentId);
+  const answer = answerField?.value.trim();
+  const assignments = getAssignments();
+  const assignment = assignments.find(item => item.id === assignmentId && normalizeEmail(item.studentEmail) === normalizeEmail(currentUser.email));
+  if (!assignment || !answer) { answerField?.focus(); return; }
+  assignment.answer = answer;
+  assignment.submittedAt = Date.now();
+  setAssignments(assignments);
+  renderStudentInbox();
+}
+
+function forwardToTeacher(studentEmail, studentName, questionText){
+  const questions = getTeacherQuestions();
+  questions.push({
+    id: 'q_' + Date.now() + '_' + Math.floor(Math.random()*10000),
+    studentEmail, studentName, question: questionText,
+    askedAt: Date.now(),
+    answered: false,
+    answer: null,
+    answeredAt: null,
+  });
+  setTeacherQuestions(questions);
+}
+
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  appendUserMessage(text);
+  input.value = '';
+  showTyping();
+  setTimeout(()=>{
+    hideTyping();
+    const match = matchSyllabus(text);
+    if(match){
+      appendBotMessage(match.a);
+    } else {
+      const fb = FALLBACKS[Math.floor(Math.random()*FALLBACKS.length)];
+      appendBotMessage(fb);
+      forwardToTeacher(currentUser.email, currentUser.name, text);
+    }
+    renderStudentDashboard();
+  }, 600 + Math.random()*500);
+}
+
+/* ======================================================================
+   TEACHER VIEWS
+   ====================================================================== */
+function approvedStudents(){
+  const teacherEmail = normalizeEmail(currentUser.email);
+  return DB.users.filter(u=>u.role==='student' && u.approved && normalizeEmail(u.linkedTeacherEmail) === teacherEmail);
+}
+function syllabusLenFor(student){
+  return SYLLABUS_BY_LEVEL[normalizeStudentLevel(student.level)].length;
+}
+
+function renderTeacherDashboard(){
+  document.getElementById('teacherGreeting').textContent = `Welcome back, ${currentUser.name.split(' ')[0]}`;
+  populateStudentCodeSchoolOptions();
+  renderSelectedStudentCodeSchools();
+  const students = approvedStudents();
+  document.getElementById('statStudentCount').textContent = students.length;
+  const totalQ = students.reduce((sum,s)=>sum+(s.questionsAsked||0),0);
+  document.getElementById('statTotalQ').textContent = totalQ;
+  const avgProg = students.length ? Math.round(students.reduce((sum,s)=>sum+(progressCount(s)/syllabusLenFor(s)),0) / students.length * 100) : 0;
+  document.getElementById('statAvgProgress').textContent = avgProg + '%';
+  const teacherCode = currentUser.state ? generateTeacherAccessCode(currentUser.state, currentUser.lga) : CODES.teacher;
+  document.getElementById('teacherCodeDisplay').textContent = teacherCode;
+
+  const codes = Array.isArray(currentUser.generatedStudentAccessCodes) ? currentUser.generatedStudentAccessCodes : [];
+  const codeHolder = document.getElementById('teacherGeneratedCodes');
+  if (codes.length === 0) {
+    codeHolder.innerHTML = '<div class="empty"><div class="big">🔐</div>No student access code generated yet.<br>Click the button below to create one for a school in your state.</div>';
+    return;
+  }
+  codeHolder.innerHTML = codes.map(item => `
+    <div class="qcard" style="margin-bottom:10px;">
+      <div class="qmeta"><strong>${item.school}</strong> · ${item.lga}, ${item.state}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div class="qtext" style="margin:0; font-family:'JetBrains Mono',monospace;">${item.code}</div>
+        <button class="btn btn-sm" onclick="deleteStudentAccessCode('${item.code}')" aria-label="Delete access code ${item.code}">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTeacherStudents(){
+  const students = approvedStudents();
+  const body = document.getElementById('studentTableBody');
+  if(students.length === 0){
+    body.innerHTML = `<tr><td colspan="8" class="empty">No students linked yet. Generate an access code and share it with your students.</td></tr>`;
+    return;
+  }
+  body.innerHTML = students.map(s=>{
+    const len = syllabusLenFor(s);
+    const pct = Math.round(progressCount(s)/len*100);
+    return `<tr>
+      <td>${s.name}</td>
+      <td>${s.email}</td>
+      <td>${s.level || 'JSS1'}</td>
+      <td>${s.school || '—'}</td>
+      <td>${s.age || '—'}</td>
+      <td>${pct}% (${progressCount(s)}/${len})</td>
+      <td>${s.questionsAsked||0}</td>
+      <td>${new Date(s.lastActive).toLocaleDateString()}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderTeacherAccount(){
+  document.getElementById('tAccName').textContent = currentUser.name;
+  document.getElementById('tAccEmail').textContent = currentUser.email;
+  const sessions = getSessionHistory().filter(item => normalizeEmail(item.email) === normalizeEmail(currentUser.email)).slice(-5).reverse();
+  const host = document.getElementById('recentLoginSessions');
+  if (!host) return;
+  if (sessions.length === 0) {
+    host.innerHTML = '<div class="empty"><div class="big">🧾</div>No recent login history yet.</div>';
+    return;
+  }
+  host.innerHTML = sessions.map(session => `
+    <div class="qcard" style="margin-bottom:10px;">
+      <div class="qmeta"><strong>${session.role}</strong> · ${new Date(session.timestamp).toLocaleString()}</div>
+      <div class="qtext" style="margin:0;">${session.email}</div>
+    </div>
+  `).join('');
+}
+
+function populateStudentCodeSchoolOptions(){
+  const select = document.getElementById('studentCodeSchool');
+  const region = `${currentUser.state || ''}|${currentUser.lga || ''}`;
+  if (select.dataset.region === region) return;
+  document.getElementById('studentCodeSchoolLabel').textContent = `School in ${currentUser.lga}, ${currentUser.state}`;
+  populateSchoolOptions(select, currentUser.lga);
+  select.dataset.region = region;
+}
+
+function onStudentCodeSchoolChange(){
+  const select = document.getElementById('studentCodeSchool');
+  const customField = document.getElementById('studentCodeCustomSchoolField');
+  const customInput = document.getElementById('studentCodeSchoolCustom');
+  if (select.value === '__other__') {
+    customField.style.display = 'block';
+    customInput.focus();
+  } else {
+    customField.style.display = 'none';
+    customInput.value = '';
+  }
+}
+
+function addStudentCodeSchoolSelection(){
+  if (!currentUser || currentUser.role !== 'teacher') return;
+  const select = document.getElementById('studentCodeSchool');
+  const school = select.value === '__other__'
+    ? document.getElementById('studentCodeSchoolCustom').value.trim()
+    : select.value;
+  if (!school || school === '__other__') {
+    alert('Select a school or enter the school name before adding it.');
+    return;
+  }
+  const duplicate = selectedStudentCodeSchools.some(item => normalizeSchoolDetail(item.school) === normalizeSchoolDetail(school));
+  if (duplicate) {
+    alert('That school is already in your list.');
+    return;
+  }
+  selectedStudentCodeSchools.push({state:currentUser.state, lga:currentUser.lga, school});
+  select.value = '';
+  document.getElementById('studentCodeCustomSchoolField').style.display = 'none';
+  document.getElementById('studentCodeSchoolCustom').value = '';
+  renderSelectedStudentCodeSchools();
+}
+
+function renderSelectedStudentCodeSchools(){
+  const host = document.getElementById('teacherSelectedCodeSchools');
+  if (!host) return;
+  host.innerHTML = selectedStudentCodeSchools.map((item,index) => `
+    <div class="qmeta" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;">
+      <span>${escapeHtml(item.school)} · ${escapeHtml(item.lga)}, ${escapeHtml(item.state)}</span>
+      <button class="btn btn-sm" onclick="removeStudentCodeSchoolSelection(${index})" aria-label="Remove ${escapeHtml(item.school)}">Remove</button>
+    </div>`).join('');
+}
+
+function removeStudentCodeSchoolSelection(index){
+  selectedStudentCodeSchools.splice(index,1);
+  renderSelectedStudentCodeSchools();
+}
+
+/* ---- Student Questions inbox (teacher side) ---- */
+async function generateStudentAccessCodeForTeacher(){
+  if (!currentUser || currentUser.role !== 'teacher') return;
+  if (selectedStudentCodeSchools.length === 0) {
+    alert('Add at least one school before generating student access codes.');
+    return;
+  }
+  const list = Array.isArray(currentUser.generatedStudentAccessCodes) ? currentUser.generatedStudentAccessCodes : [];
+  const usedCodes = new Set(getAllStudentAccessCodes().map(item => normalizeAccessCode(item.code)));
+  const generatedCodes = [];
+  for (const schoolEntry of selectedStudentCodeSchools) {
+    let code = null;
+    for (let attempt = 0; attempt < 10000; attempt++) {
+      const candidate = generateStudentAccessCode(schoolEntry.state, schoolEntry.school, schoolEntry.lga);
+      if (!usedCodes.has(normalizeAccessCode(candidate))) {
+        code = candidate;
+        usedCodes.add(normalizeAccessCode(candidate));
+        break;
+      }
+    }
+    if (!code) {
+      alert('No available access code could be generated. Please try again later.');
+      return;
+    }
+    generatedCodes.push({...schoolEntry, code, createdAt:Date.now()});
+  }
+  currentUser.generatedStudentAccessCodes = list.concat(generatedCodes);
+  const {error} = await supabase().from('student_access_codes').insert(generatedCodes.map(item=>({
+    id:item.code,teacher_id:currentUser.id,code:item.code,state:item.state,lga:item.lga,school:item.school,created_at:item.createdAt,
+  })));
+  if (error) { reportCloudError(error); return; }
+  saveUser(currentUser);
+  selectedStudentCodeSchools = [];
+  renderTeacherDashboard();
+}
+
+async function deleteStudentAccessCode(code){
+  if (!currentUser || currentUser.role !== 'teacher') return;
+  if (!confirm(`Delete access code ${code}? Students will no longer be able to register with it.`)) return;
+  const {error} = await supabase().from('student_access_codes').delete().eq('teacher_id',currentUser.id).eq('code',code);
+  if (error) { reportCloudError(error); return; }
+  currentUser.generatedStudentAccessCodes = (currentUser.generatedStudentAccessCodes || [])
+    .filter(item => normalizeAccessCode(item.code) !== normalizeAccessCode(code));
+  saveUser(currentUser);
+  renderTeacherDashboard();
+}
+
+function renderTeacherQuestions(){
+  const approvedEmails = approvedStudents().map(s=>s.email);
+  const all = getTeacherQuestions().filter(q=>approvedEmails.includes(q.studentEmail));
+  const el = document.getElementById('questionsList');
+  // newest first, pending first
+  all.sort((a,b)=> (a.answered===b.answered ? b.askedAt-a.askedAt : (a.answered?1:-1)));
+  const questionCards = all.length ? all.map(q=>{
+    const when = new Date(q.askedAt).toLocaleString();
+    const statusPill = q.answered
+      ? `<span class="pill pill-answered">Answered</span>`
+      : `<span class="pill pill-pending">Awaiting reply</span>`;
+    const answerBlock = q.answered
+      ? `<div class="qanswer"><span class="qa-label">Your reply</span>${escapeHtml(q.answer)}</div>`
+      : `<div class="qreply-row">
+          <textarea id="reply-${q.id}" placeholder="Type your answer — it'll appear in ${escapeHtml(q.studentName.split(' ')[0])}'s chat"></textarea>
+          <button class="btn btn-coral btn-sm" onclick="submitTeacherReply('${q.id}')">Send</button>
+        </div>`;
+    return `
+      <div class="qcard">
+        <div class="qmeta"><strong>${escapeHtml(q.studentName)}</strong> · ${when} ${statusPill}</div>
+        <div class="qtext">"${escapeHtml(q.question)}"</div>
+        ${answerBlock}
+      </div>`;
+  }).join('') : '<div class="empty">No questions yet. Questions students send to their teacher will appear here.</div>';
+  const messages = getInboxMessages();
+  const messageCards = approvedStudents().map(student => {
+    const thread = messages.filter(item => normalizeEmail(item.studentEmail) === normalizeEmail(student.email) && normalizeEmail(item.teacherEmail) === normalizeEmail(currentUser.email));
+    if (!thread.length) return '';
+    return `<div class="qcard">
+      <div class="qmeta"><strong>${escapeHtml(student.name)}</strong> · ${escapeHtml(student.email)}</div>
+      <div class="inbox-thread">${thread.map(item => `
+        <div class="inbox-message ${item.senderRole === 'student' ? 'student' : 'teacher'}">
+          <div class="qmeta"><strong>${escapeHtml(item.senderName)}</strong> · ${new Date(item.createdAt).toLocaleString()}</div>
+          ${escapeHtml(item.text)}
+        </div>`).join('')}</div>
+      <div class="qreply-row"><textarea id="inbox-reply-${escapeHtml(student.email)}" placeholder="Reply to ${escapeHtml(student.name)}"></textarea>
+        <button class="btn btn-coral btn-sm" onclick="sendTeacherMessage('${escapeHtml(student.email)}')">Send</button></div>
+    </div>`;
+  }).filter(Boolean).join('');
+  el.innerHTML = `<div class="card"><h3>Questions for the tutor</h3>${questionCards}</div>
+    <div class="card"><h3>Student messages</h3>${messageCards || '<p style="color:var(--muted);margin:12px 0 0;">Student messages and replies will appear here.</p>'}</div>`;
+}
+
+function sendTeacherMessage(studentEmail){
+  const student = findUser(studentEmail);
+  const textarea = document.getElementById('inbox-reply-' + studentEmail);
+  const text = textarea?.value.trim();
+  if (!student || normalizeEmail(student.linkedTeacherEmail) !== normalizeEmail(currentUser.email) || !text) { textarea?.focus(); return; }
+  addInboxMessage(student, 'teacher', currentUser.name, text);
+  textarea.value = '';
+  renderTeacherQuestions();
+}
+
+function renderTeacherAssignments(){
+  if (!currentUser || currentUser.role !== 'teacher') return;
+  const students = approvedStudents();
+  const select = document.getElementById('assignmentStudent');
+  const previous = select.value;
+  select.innerHTML = students.length
+    ? students.map(student => `<option value="${escapeHtml(student.email)}">${escapeHtml(student.name)} · ${escapeHtml(student.school || student.email)}</option>`).join('')
+    : '<option value="">No approved students yet</option>';
+  if (students.some(student => student.email === previous)) select.value = previous;
+  const assignments = getAssignments().filter(item => normalizeEmail(item.teacherEmail) === normalizeEmail(currentUser.email)).sort((a,b) => b.createdAt-a.createdAt);
+  const host = document.getElementById('teacherAssignments');
+  host.innerHTML = assignments.length ? assignments.map(item => {
+    const student = findUser(item.studentEmail);
+    return `<div class="card">
+      <div class="qmeta"><strong>${escapeHtml(student?.name || item.studentEmail)}</strong> · ${new Date(item.createdAt).toLocaleString()}${item.dueDate ? ` · Due ${escapeHtml(item.dueDate)}` : ''}</div>
+      <h3>${escapeHtml(item.title)}</h3>
+      <div class="assignment-question">${escapeHtml(item.question)}</div>
+      ${item.submittedAt ? `<div class="qanswer"><span class="qa-label">Student answer · ${new Date(item.submittedAt).toLocaleString()}</span>${escapeHtml(item.answer)}</div>
+        <div class="grade-form">
+          <input type="number" id="grade-score-${escapeHtml(item.id)}" min="0" max="100" value="${item.score ?? ''}" placeholder="Score / 100" aria-label="Score out of 100">
+          <textarea id="grade-feedback-${escapeHtml(item.id)}" placeholder="Feedback for the student">${escapeHtml(item.feedback || '')}</textarea>
+          <button class="btn btn-coral btn-sm" onclick="markAssignment('${escapeHtml(item.id)}')">${item.score !== null && item.score !== undefined ? 'Update mark' : 'Send mark'}</button>
+        </div>` : '<span class="pill pill-pending">Waiting for student answer</span>'}
+    </div>`;
+  }).join('') : '<div class="card"><p style="color:var(--muted);margin:0;">Assignments you send will appear here for review and marking.</p></div>';
+}
+
+function sendAssignment(){
+  if (!currentUser || currentUser.role !== 'teacher') return;
+  const student = findUser(document.getElementById('assignmentStudent').value);
+  const title = document.getElementById('assignmentTitle').value.trim();
+  const question = document.getElementById('assignmentQuestion').value.trim();
+  const dueDate = document.getElementById('assignmentDueDate').value;
+  if (!student || !title || !question) { alert('Choose a student and enter an assignment title and question.'); return; }
+  const assignments = getAssignments();
+  assignments.push({
+    id: 'a_' + Date.now() + '_' + Math.floor(Math.random()*10000),
+    teacherEmail: normalizeEmail(currentUser.email), studentEmail: normalizeEmail(student.email),
+    title, question, dueDate, createdAt: Date.now(), answer: '', submittedAt: null,
+    score: null, feedback: '', notificationSeen: false,
+  });
+  setAssignments(assignments);
+  document.getElementById('assignmentTitle').value = '';
+  document.getElementById('assignmentQuestion').value = '';
+  document.getElementById('assignmentDueDate').value = '';
+  renderTeacherAssignments();
+}
+
+function markAssignment(assignmentId){
+  if (!currentUser || currentUser.role !== 'teacher') return;
+  const assignments = getAssignments();
+  const assignment = assignments.find(item => item.id === assignmentId && normalizeEmail(item.teacherEmail) === normalizeEmail(currentUser.email));
+  const scoreInput = document.getElementById('grade-score-' + assignmentId);
+  if (!assignment || !scoreInput || scoreInput.value.trim() === '') { scoreInput?.focus(); return; }
+  const score = Number(scoreInput.value);
+  if (!Number.isFinite(score) || score < 0 || score > 100) { alert('Enter a score from 0 to 100.'); scoreInput.focus(); return; }
+  assignment.score = score;
+  assignment.feedback = document.getElementById('grade-feedback-' + assignmentId).value.trim();
+  assignment.markedAt = Date.now();
+  assignment.notificationSeen = false;
+  setAssignments(assignments);
+  renderTeacherAssignments();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function submitTeacherReply(qId){
+  const textarea = document.getElementById('reply-'+qId);
+  const answer = textarea.value.trim();
+  if(!answer){ textarea.focus(); return; }
+  const questions = getTeacherQuestions();
+  const q = questions.find(x=>x.id === qId);
+  if(!q) return;
+  q.answered = true;
+  q.answer = answer;
+  q.answeredAt = Date.now();
+  setTeacherQuestions(questions);
+
+  // Deliver into the student's own chat log so they see it next time they open chat
+  const student = findUser(q.studentEmail);
+  if(student){
+    student.chatLog = student.chatLog || [];
+    student.chatLog.push({
+      role: 'bot',
+      text: `<strong>📩 A reply from your teacher, ${escapeHtml(currentUser.name)}:</strong><br>${escapeHtml(answer)}`,
+      at: Date.now(),
+      fromTeacher: true,
+    });
+    saveUser(student);
+    addInboxMessage(student, 'teacher', currentUser.name, answer);
+  }
+  renderTeacherQuestions();
+}
+
+/* ======================================================================
+   BOOT: restore session if present
+   ====================================================================== */
+async function refreshTeacherDashboard(){
+  if (!currentUser || currentUser.role !== 'teacher' || !document.getElementById('app').classList.contains('open')) return;
+  try {
+    const latestTeacher = await loadSharedData(currentUser);
+    if (!latestTeacher) return;
+    currentUser = latestTeacher;
+    renderTeacherDashboard();
+    renderTeacherStudents();
+    renderTeacherQuestions();
+    renderTeacherAssignments();
+  } catch (error) { reportCloudError(error); }
+}
+
+async function refreshCurrentUserData(){
+  if (!currentUser || !window.supabaseUser?.id || !document.getElementById('app').classList.contains('open')) return;
+  if (currentUser.role === 'teacher') return refreshTeacherDashboard();
+  try {
+    const latestStudent = await loadSharedData(currentUser);
+    if (!latestStudent) return;
+    currentUser = latestStudent;
+    renderStudentDashboard();
+    renderStudentAccount();
+    renderStudentInbox();
+    if (document.getElementById('page-s-syllabus').classList.contains('active')) renderStudentSyllabus();
+  } catch (error) { reportCloudError(error); }
+}
+
+async function boot(){
+  try {
+    const {data,error} = await supabase().auth.getSession();
+    if (error) throw error;
+    const session = data.session;
+    if (session?.user) {
+      window.supabaseUser = session.user;
+      const user = await loadSharedData({id:session.user.id,role:session.user.user_metadata?.role});
+      if (user) {
+        DB.session = {email:user.email};
+        enterApp(user);
+      }
+    }
+    updateHomeNav();
+  } catch (error) {
+    console.error('Could not restore Supabase session:',error);
+    updateHomeNav();
+  }
+}
+
+window.addEventListener('supabase-ready', () => { void boot(); }, {once:true});
+window.addEventListener('focus', () => { void refreshCurrentUserData(); });
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) void refreshCurrentUserData();
+});
+</script>
+</body>
+</html>
