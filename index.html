@@ -1475,7 +1475,7 @@ async function handleLogin(){
   }
 
   const {data,error} = await supabase().auth.signInWithPassword({email,password});
-  if(error){ showError('loginError', 'Could not sign in. Check your email, password, and email confirmation.'); return; }
+  if(error){ showError('loginError', `Supabase error: ${error.message} (code: ${error.code || 'not provided'})`); return; }
   window.supabaseUser = data.user;
   const user = await loadSharedData({id:data.user.id,role:data.user.user_metadata?.role});
   if(!user || user.role !== loginRole){
